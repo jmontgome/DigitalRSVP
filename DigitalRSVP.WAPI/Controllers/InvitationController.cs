@@ -30,7 +30,7 @@ namespace DigitalRSVP.WAPI.Controllers
             {
                 if (Guid.TryParse(id, out Guid invitationId))
                 {
-                    Invitation inv = await _invitationService.GetInvitation(invitationId);
+                    Invitation inv = await _invitationService.GetInvitationAsync(invitationId);
                     if (inv != null)
                     {
                         return new JsonResult(inv);

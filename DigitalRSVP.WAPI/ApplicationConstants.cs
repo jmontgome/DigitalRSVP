@@ -37,12 +37,13 @@
     {
         public class KnownTables
         {
-
+            public static string Invitation = "dbo.Invitation";
+            public static string RSVP = "dbo.RSVP";
         }
 
         public class KnownStoredProcedures
         {
-
+            public static string Invitation_Get_ById = "dbo.up_Invitation_Get_ById";
         }
     }
 }

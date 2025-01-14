@@ -1,4 +1,6 @@
-﻿namespace DigitalRSVP.Core.Models
+﻿using System;
+
+namespace DigitalRSVP.Core.Models
 {
     public class Invitation
     {
@@ -64,6 +66,38 @@
             set
             {
                 this._noteToInvitee = value;
+            }
+        }
+
+        private DateTime _createdDate;
+        public DateTime Created_Date
+        {
+            get
+            {
+                return this._createdDate;
+            }
+            set
+            {
+                if (value > new DateTime(2025, 1, 1))
+                {
+                    this._createdDate = value;
+                }
+            }
+        }
+
+        private DateTime _updatedDate;
+        public DateTime Updated_Date
+        {
+            get
+            {
+                return this._updatedDate;
+            }
+            set
+            {
+                if (value > new DateTime(2025, 1, 1))
+                {
+                    this._createdDate = value;
+                }
             }
         }
     }

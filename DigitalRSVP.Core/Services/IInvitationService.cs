@@ -4,8 +4,8 @@ namespace DigitalRSVP.Core.Services
 {
     public interface IInvitationService
     {
-        public Task<Invitation> GetInvitation(Guid id);
+        public Task<Invitation> GetInvitationAsync(Guid id);
 
-        public Task<bool> InvitationAuthorized(Guid inviteeId);
+        public Task<bool> InvitationAuthorizedAsync(Guid inviteeId);
     }
 }

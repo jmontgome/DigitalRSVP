@@ -96,6 +96,38 @@
             }
         }
 
+        private DateTime _createdDate;
+        public DateTime Created_Date
+        {
+            get
+            {
+                return this._createdDate;
+            }
+            set
+            {
+                if (value > new DateTime(2025, 1, 1))
+                {
+                    this._createdDate = value;
+                }
+            }
+        }
+
+        private DateTime _updatedDate;
+        public DateTime Updated_Date
+        {
+            get
+            {
+                return this._updatedDate;
+            }
+            set
+            {
+                if (value > new DateTime(2025, 1, 1))
+                {
+                    this._createdDate = value;
+                }
+            }
+        }
+
         public RSVP(Guid id)
         {
             this._id = id;

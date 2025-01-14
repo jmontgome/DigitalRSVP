@@ -102,10 +102,10 @@ namespace DigitalRSVP.WAPI.Controllers
             {
                 if (rsvp != null)
                 {
-                    RSVP submittedRSVP = JsonConvert.DeserializeObject<RSVP>(JsonConvert.SerializeObject(rsvp));
+                    RSVP? submittedRSVP = JsonConvert.DeserializeObject<RSVP>(rsvp.ToString()!);
                     if (submittedRSVP != null)
                     {
-                        if (await _invitationService.InvitationAuthorized(submittedRSVP.InviteeId))
+                        if (await _invitationService.InvitationAuthorizedAsync(submittedRSVP.InviteeId))
                         {
                             await _rsvpService.SubmitRSVP(submittedRSVP);
                             return new StatusCodeResult(200);
@@ -137,10 +137,10 @@ namespace DigitalRSVP.WAPI.Controllers
             {
                 if (rsvp != null)
                 {
-                    RSVP submittedRSVP = JsonConvert.DeserializeObject<RSVP>(JsonConvert.SerializeObject(rsvp));
+                    RSVP? submittedRSVP = JsonConvert.DeserializeObject<RSVP>(rsvp.ToString()!);
                     if (submittedRSVP != null)
                     {
-                        if (await _invitationService.InvitationAuthorized(submittedRSVP.InviteeId))
+                        if (await _invitationService.InvitationAuthorizedAsync(submittedRSVP.InviteeId))
                         {
                             await _rsvpService.EditRSVP(submittedRSVP);
                             return new StatusCodeResult(200);
