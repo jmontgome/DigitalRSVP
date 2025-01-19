@@ -4,10 +4,10 @@ namespace DigitalRSVP.Core.Services
 {
     public interface IRSVPService
     {
-        public Task<RSVP> GetRSVP(Guid rsvpId);
-        public Task<RSVP> GetRSVPByInvitee(Guid inviteeId);
+        public Task<RSVP> GetRSVPAsync(Guid rsvpId);
+        public Task<RSVP> GetRSVPByInviteeAsync(Guid inviteeId);
         
-        public Task SubmitRSVP(RSVP rsvp);
-        public Task EditRSVP(RSVP rsvp);
+        public Task SubmitRSVPAsync(RSVP rsvp);
+        public Task EditRSVPAsync(RSVP rsvp);
     }
 }

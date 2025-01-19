@@ -34,7 +34,7 @@ namespace DigitalRSVP.WAPI.Controllers
             {
                 if (Guid.TryParse(rsvpId, out Guid id))
                 {
-                    RSVP rsvp = await _rsvpService.GetRSVP(id);
+                    RSVP rsvp = await _rsvpService.GetRSVPAsync(id);
                     if (rsvp != null)
                     {
                         return new JsonResult(rsvp);
@@ -68,7 +68,7 @@ namespace DigitalRSVP.WAPI.Controllers
             {
                 if (Guid.TryParse(invId, out Guid id))
                 {
-                    RSVP rsvp = await _rsvpService.GetRSVPByInvitee(id);
+                    RSVP rsvp = await _rsvpService.GetRSVPByInviteeAsync(id);
                     if (rsvp != null)
                     {
                         return new JsonResult(rsvp);
@@ -107,7 +107,7 @@ namespace DigitalRSVP.WAPI.Controllers
                     {
                         if (await _invitationService.InvitationAuthorizedAsync(submittedRSVP.InviteeId))
                         {
-                            await _rsvpService.SubmitRSVP(submittedRSVP);
+                            await _rsvpService.SubmitRSVPAsync(submittedRSVP);
                             return new StatusCodeResult(200);
                         }
                         else
@@ -142,7 +142,7 @@ namespace DigitalRSVP.WAPI.Controllers
                     {
                         if (await _invitationService.InvitationAuthorizedAsync(submittedRSVP.InviteeId))
                         {
-                            await _rsvpService.EditRSVP(submittedRSVP);
+                            await _rsvpService.EditRSVPAsync(submittedRSVP);
                             return new StatusCodeResult(200);
                         }
                         else

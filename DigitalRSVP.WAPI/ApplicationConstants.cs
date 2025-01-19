@@ -44,6 +44,10 @@
         public class KnownStoredProcedures
         {
             public static string Invitation_Get_ById = "dbo.up_Invitation_Get_ById";
+            public static string RSVP_Get_ById = "dbo.up_RSVP_Get_ById";
+            public static string RSVP_Get_ByInvitationID = "dbo.up_RSVP_Get_ByInvitationId";
+            public static string RSVP_Submit = "dbo.up_RSVP_Submit";
+            public static string RSVP_Update = "dbo.up_RSVP_Update";
         }
     }
 }

@@ -128,6 +128,7 @@
             }
         }
 
+        public RSVP() { }
         public RSVP(Guid id)
         {
             this._id = id;
