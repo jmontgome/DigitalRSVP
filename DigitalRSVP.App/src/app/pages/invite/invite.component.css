@@ -1,0 +1,11 @@
+.invite-main {
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+.letterImg {
+    margin-top: 15vh;
+    width: 90%;
+    max-width: 640px;
+}

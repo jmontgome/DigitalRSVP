@@ -1,0 +1,15 @@
+.main {
+    background-color: black;
+}
+
+.content {
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+
+.footer {
+    background-color: black;
+    text-align: center;
+}
