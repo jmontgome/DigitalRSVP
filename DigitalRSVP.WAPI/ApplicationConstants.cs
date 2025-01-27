@@ -14,11 +14,11 @@
 
         public static string[] AllowedDomains_DEV =
         {
-
+            "http://localhost:63432"
         };
         public static string[] AllowedDomains_TEST =
         {
-
+            "http://localhost:63432"
         };
 #if RELEASE
         public static string[] AllowedDomains_PROD = 
@@ -28,7 +28,7 @@
 #else
         public static string[] AllowedDomains_PROD =
         {
-
+            "http://localhost:63432"
         };
 #endif
     }
