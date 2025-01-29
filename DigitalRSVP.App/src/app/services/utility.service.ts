@@ -14,7 +14,7 @@ export class UtilityService {
     this._httpClient = httpClient;
   }
 
-  public async GetNewGuid(): Promise<string> {
+  public async GetNewGuidAsync(): Promise<string> {
     return new Promise(resolve => {
       this._httpClient.get<string>(`${ApplicationConstants.ApiConstants.GetApiUrl()}${ApplicationConstants.ApiConstants.Utilities_GetNewGuid}`)
       .pipe(take(1))

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Invitation } from '../../data/invitation';
 import { InvitationService } from '../../services/invitation.service';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-rsvp',
@@ -14,12 +15,15 @@ export class InviteComponent {
   private readonly _router: Router;
 
   private readonly _inviteService: InvitationService;
+  private readonly _errorService: ErrorService;
 
   constructor(router: Router,
-    inviteService: InvitationService) {
+    inviteService: InvitationService,
+    errorService: ErrorService) {
     this._router = router;
     
     this._inviteService = inviteService;
+    this._errorService = errorService;
   }
 
   async ngOnInit() {
@@ -32,7 +36,8 @@ export class InviteComponent {
         try {
           let invite: Invitation = await this._inviteService.GetInvitationAsync(invId);
           if (invite) {
-  
+            localStorage.setItem('invite', JSON.stringify(invite));
+            this._router.navigateByUrl('/rsvp');
           }
           /*
           Check id and see if it exists in server.
@@ -42,7 +47,7 @@ export class InviteComponent {
           */
         }
         catch (exc) {
-          
+          console.log(exc);
         }
       }
       else {
