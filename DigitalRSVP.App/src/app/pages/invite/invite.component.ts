@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Invitation } from '../../data/invitation';
 import { InvitationService } from '../../services/invitation.service';
 import { ErrorService } from '../../services/error.service';
+import { ApplicationConstants } from '../../application.constants';
 
 @Component({
   selector: 'app-rsvp',
@@ -27,16 +28,17 @@ export class InviteComponent {
   }
 
   async ngOnInit() {
-    if (sessionStorage.getItem('hasOpenedInv')) {
+    if (sessionStorage.getItem(ApplicationConstants.AppConstants.HASOPENED_FLAG_STORAGE)) {
       this._router.navigateByUrl('/rsvp');
     }
     else {
       let invId = this._route.snapshot.paramMap.get('invite');
       if (invId) {
+        localStorage.setItem(ApplicationConstants.AppConstants.INVITE_ID_STORAGE, invId);
         try {
           let invite: Invitation = await this._inviteService.GetInvitationAsync(invId);
           if (invite) {
-            localStorage.setItem('invite', JSON.stringify(invite));
+            localStorage.setItem(ApplicationConstants.AppConstants.INVITE_OBJ_STORAGE, JSON.stringify(invite));
             this._router.navigateByUrl('/rsvp');
           }
           /*

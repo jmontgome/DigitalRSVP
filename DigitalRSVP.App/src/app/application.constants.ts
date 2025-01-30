@@ -6,6 +6,14 @@ export enum EnvironmentType {
 }
 
 export class ApplicationConstants {
+  public static AppConstants = class {
+    public static INVITE_ID_STORAGE: string = "inviteId";
+    public static INVITE_OBJ_STORAGE: string = "invite";
+    public static RSVP_OBJ_STORAGE: string = "rsvp";
+
+    public static HASOPENED_FLAG_STORAGE: string = "hasOpenedInv";
+  }
+
   public static ApiConstants = class {
     public static GetApiUrl(): string {
       if (this.Environment == EnvironmentType.DEV) {
