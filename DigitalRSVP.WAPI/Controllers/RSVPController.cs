@@ -107,8 +107,16 @@ namespace DigitalRSVP.WAPI.Controllers
                     {
                         if (await _invitationService.InvitationAuthorizedAsync(submittedRSVP.InviteeId))
                         {
-                            await _rsvpService.SubmitRSVPAsync(submittedRSVP);
-                            return new StatusCodeResult(200);
+                            RSVP check = await _rsvpService.GetRSVPByInviteeAsync(submittedRSVP.InviteeId);
+                            if (check == null)
+                            {
+                                await _rsvpService.SubmitRSVPAsync(submittedRSVP);
+                                return new StatusCodeResult(200);
+                            }
+                            else
+                            {
+                                throw new InvalidDataException($"User submitted an RSVP that already exists, Invitation ID: {submittedRSVP.InviteeId}.");
+                            }
                         }
                         else
                         {
@@ -142,12 +150,20 @@ namespace DigitalRSVP.WAPI.Controllers
                     {
                         if (await _invitationService.InvitationAuthorizedAsync(submittedRSVP.InviteeId))
                         {
-                            await _rsvpService.EditRSVPAsync(submittedRSVP);
-                            return new StatusCodeResult(200);
+                            RSVP check = await _rsvpService.GetRSVPByInviteeAsync(submittedRSVP.InviteeId);
+                            if (check != null)
+                            {
+                                await _rsvpService.EditRSVPAsync(submittedRSVP);
+                                return new StatusCodeResult(200);
+                            }
+                            else
+                            {
+                                throw new InvalidDataException($"User attempted to edit an RSVP that does not exist, Invitation ID: {submittedRSVP.InviteeId}.");
+                            }
                         }
                         else
                         {
-                            throw new UnauthorizedAccessException($"User gave an invalid invitation ID, {submittedRSVP.InviteeId}.");
+                            throw new UnauthorizedAccessException($"User gave an invalid invitation ID, Invitation ID: {submittedRSVP.InviteeId}.");
                         }
                     }
                 }
