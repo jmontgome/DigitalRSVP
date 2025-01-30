@@ -1,4 +1,6 @@
-﻿namespace DigitalRSVP.Core.Models
+﻿using Newtonsoft.Json;
+
+namespace DigitalRSVP.Core.Models
 {
     public class Error
     {
@@ -65,6 +67,11 @@
             {
                 this._dateTime = value;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{JsonConvert.SerializeObject(this).ToString()}";
         }
     }
 }

@@ -31,6 +31,8 @@ export class ApplicationConstants {
     public static TEST_API_URL: string = "https://digitalrsvp-service-dev.azurewebsites.net/";
     public static PROD_API_URL: string = "https://digitalrsvp-service.azurewebsites.net/";
 
+    public static Error_Post: string = "Error";
+
     public static Utilities_GetNewGuid: string = "Utility/NewGuid";
 
     public static Invitation_GetInvite: string = "Invitation/id";
