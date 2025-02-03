@@ -49,7 +49,7 @@ export class InviteComponent {
           */
         }
         catch (exc) {
-          console.log(exc);
+          this._errorService.SubmitErrorAsync(exc);
         }
       }
       else {
