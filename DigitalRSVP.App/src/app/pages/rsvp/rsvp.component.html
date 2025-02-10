@@ -1,4 +1,51 @@
 <div class="rsvp-main">
     <h1>RSVP</h1>
-    <h3>Please fill out the following infomration.</h3>
+    <h3>{{this.getInvitationHeading()}}</h3>
+    <p>Please fill out the following information, so we may get your RSVP!</p>
+    <table class="rsvp-form-table">
+        <tbody>
+            <tr>
+                <td class="rsvp-form-label">
+                    <p>Attending Wedding</p>
+                </td>
+                <td class="rsvp-form-input">
+                    <select class="rsvp-dropdown" name="attendingWedding" id="attendingWeddingInput">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="rsvp-form-label">
+                    <p>Attending Reception</p>
+                </td>
+                <td class="rsvp-form-input">
+                    <select class="rsvp-dropdown" name="attendingReception" id="attendingReceptionInput">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Your Party</h3>
+    <button class="rsvp-button-add">
+        Add Members
+    </button>
+    <table>
+        <tbody>
+            <tr *ngFor="let guest of getGuestsFromRSVP();">
+                <td>
+                    <p>{{guest.Name}}</p>
+                </td>
+                <td>
+                    <p>{{guest.Age}}</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <label class="rsvp-label" for="noteInput" id="noteLabel">
+        Send a personalized note or specify any Specialized Accomodations/Information you want us to know!
+    </label>
+    <textarea class="rsvp-note-input" id="noteInput"></textarea>
 </div>

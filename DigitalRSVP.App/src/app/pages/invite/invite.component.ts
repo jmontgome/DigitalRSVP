@@ -7,7 +7,7 @@ import { ErrorService } from '../../services/error.service';
 import { ApplicationConstants } from '../../application.constants';
 
 @Component({
-  selector: 'app-rsvp',
+  selector: 'app-invite',
   templateUrl: './invite.component.html',
   styleUrl: './invite.component.css'
 })
@@ -39,14 +39,10 @@ export class InviteComponent {
           let invite: Invitation = await this._inviteService.GetInvitationAsync(invId);
           if (invite) {
             localStorage.setItem(ApplicationConstants.AppConstants.INVITE_OBJ_STORAGE, JSON.stringify(invite));
-            this._router.navigateByUrl('/rsvp');
           }
-          /*
-          Check id and see if it exists in server.
-          If it does not, send them to not found.
-          if it does set the id into session storage for safe keeping
-          and consistency across the application.
-          */
+          else {
+            this._router.navigateByUrl('not-found');
+          }
         }
         catch (exc) {
           this._errorService.SubmitErrorAsync(exc);
@@ -60,5 +56,6 @@ export class InviteComponent {
 
   openInvitation() {
     sessionStorage.setItem('hasOpenedInv', 'true');
+    this._router.navigateByUrl('/rsvp');
   }
 }

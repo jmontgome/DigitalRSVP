@@ -11,7 +11,9 @@ export class RSVP {
     private _createdDate: Date | null = null;
     private _updatedDate: Date | null = null;
 
-    constructor() {}
+    constructor() {
+        this._guests = new Array<Guest>();
+    }
 
     get Id(): string {
         return this._id;

@@ -11,5 +11,10 @@
 
 .footer {
     background-color: black;
+    color: rgba(255, 255, 255, 0.26);
     text-align: center;
+    width: 100vw;
+    font-size: small;
+    bottom: 3vh;
+    position: fixed;
 }

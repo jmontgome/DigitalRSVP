@@ -31,7 +31,7 @@
 			}
 			set 
 			{
-				this._rsvpId = value
+				this._rsvpId = value;
 			}
 		}
 		

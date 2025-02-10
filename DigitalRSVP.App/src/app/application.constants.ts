@@ -44,5 +44,8 @@ export class ApplicationConstants {
     public static Utilities_GetNewGuid: string = "Utility/NewGuid";
 
     public static Invitation_GetInvite: string = "Invitation/id";
+
+    public static Rsvp_GetRsvp: string = "RSVP/id";
+    public static Rsvp_GetRsvp_ByInvite: string = "RSVP/invitation=";
   }
 }

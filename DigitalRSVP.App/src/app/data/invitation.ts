@@ -11,52 +11,52 @@ export class Invitation {
         this._id = id;
     }
 
-    get Id(): string {
+    get id(): string {
         return this._id;
     }
-    set Id(value: string) {
+    set id(value: string) {
         this._id = value;
     }
 
-    get Name(): string {
+    get name(): string {
         return this._name;
     }
-    set Name(value: string) {
+    set name(value: string) {
         this._name = value;
     }
 
-    get WeddingParty(): boolean {
+    get weddingParty(): boolean {
         return this._weddingParty;
     }
-    set WeddingParty(value: boolean) {
+    set weddingParty(value: boolean) {
         this._weddingParty = value;
     }
 
-    get DesignatedSeating(): boolean {
+    get designatedSeating(): boolean {
         return this._designatedSeating;
     }
-    set DesignatedSeating(value: boolean) {
+    set designatedSeating(value: boolean) {
         this._designatedSeating = value;
     }
 
-    get NoteToInvitee(): string {
+    get noteToInvitee(): string {
         return this._noteToInvitee;
     }
-    set NoteToInvitee(value: string) {
+    set noteToInvitee(value: string) {
         this._noteToInvitee = value;
     }
 
-    get Created_Date(): Date {
+    get created_Date(): Date {
         return this._createdDate;
     }
-    set Created_Date(value: Date) {
+    set created_Date(value: Date) {
         this._createdDate = value;
     }
 
-    get Updated_Date(): Date {
+    get updated_Date(): Date {
         return this._updatedDate;
     }
-    set Updated_Date(value: Date) {
+    set updated_Date(value: Date) {
         this._updatedDate = value;
     }
 }
