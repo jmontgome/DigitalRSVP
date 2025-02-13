@@ -72,12 +72,21 @@ export class RsvpComponent {
             if (rsvpGuid) {
                 this._rsvp.Id = rsvpGuid;
             }
-
+            this._rsvp.InviteeId = this._invitation!.id;
             this._rsvp.DateTime = new Date();
         }
         catch (exc) {
             this._errorService.SubmitErrorAsync(exc);
         }
+    }
+
+    async submitRsvp() {
+        let attendingWeddingInput = document.getElementById("attendingWeddingInput");
+        let attendingReceptionInput = document.getElementById("attendingReceptionInput");
+        let noteInput = document.getElementById("noteInput");
+        this._rsvp.AttendingReception = attendingReceptionInput!.innerText == "true" ? true : false;
+        this._rsvp.AttendingWedding = attendingWeddingInput!.innerText == "true" ? true : false;
+        this._rsvp.Note = noteInput!.innerText;
     }
 
     getInvitationHeading(): string {
