@@ -17,6 +17,19 @@ namespace DigitalRSVP.Core.Models
             }
         }
 
+        private Guid _eventId;
+        public Guid EventId
+        {
+            get
+            {
+                return this._eventId;
+            }
+            set
+            {
+                this._eventId = value;
+            }
+        }
+
         private string _name;
         public string Name
         {

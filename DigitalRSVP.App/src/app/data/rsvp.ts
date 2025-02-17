@@ -2,6 +2,7 @@ import { Guest } from "./guest";
 
 export class RSVP {
     private _id: string = '';
+    private _eventId: string = '';
     private _inviteeId: string = '';
     private _datetime: Date | null = null;
     private _guests: Array<Guest> | null = null;
@@ -15,66 +16,73 @@ export class RSVP {
         this._guests = new Array<Guest>();
     }
 
-    get Id(): string {
+    get id(): string {
         return this._id;
     }
-    set Id(value: string) {
+    set id(value: string) {
         this._id = value;
     }
 
-    get InviteeId(): string {
+    get eventId(): string {
+        return this._eventId;
+    }
+    set eventId(value: string) {
+        this._eventId = value;
+    }
+
+    get inviteeId(): string {
         return this._inviteeId;
     }
-    set InviteeId(value: string) {
+    set inviteeId(value: string) {
         this._inviteeId = value;
     }
 
-    get DateTime(): Date | null {
+    get dateTime(): Date | null {
         return this._datetime;
     }
-    set DateTime(value: Date) {
+    set dateTime(value: Date) {
         this._datetime = value;
     }
 
-    get Guests(): Array<Guest> | null {
+    get guests(): Array<Guest> | null {
         return this._guests;
     }
-    set Guests(value: Array<Guest>) {
+    set guests(value: Array<Guest>) {
         this._guests = value;
     }
 
-    get AttendingWedding(): boolean {
+    get attendingWedding(): boolean {
         return this._attendingWedding;
     }
-    set AttendingWedding(value: boolean) {
+    set attendingWedding(value: boolean) {
         this._attendingWedding = value;
     }
 
-    get AttendingReception(): boolean {
+    get attendingReception(): boolean {
         return this._attendingReception;
     }
-    set AttendingReception(value: boolean) {
+    set attendingReception(value: boolean) {
         this._attendingReception = value;
     }
 
-    get Note(): string {
+    get note(): string {
         return this._note;
     }
-    set Note(value: string) {
+    set note(value: string) {
         this._note = value;
     }
 
-    get CreatedDate(): Date | null {
+    get createdDate(): Date | null {
         return this._createdDate;
     }
-    set CreatedDate(value: Date) {
+    set createdDate(value: Date) {
         this._createdDate= value;
     }
 
-    get UpdatedDate(): Date | null { 
+    get updatedDate(): Date | null { 
         return this._updatedDate;
     }
-    set UpdatedDate(value: Date) {
+    set updatedDate(value: Date) {
         this._updatedDate = value;
     }
 }

@@ -1,5 +1,45 @@
+<div class="rsvp-popup-container" id="popupContainer">
+    <div class="rsvp-popup-window" id="welcomeWindow">
+        <p>You've Been Invited To</p>
+        <h2>{{this.getEventHeading()}}</h2>
+        <p>A Special Note From Them:</p>
+        <h3>{{getInvitationNote()}}</h3>
+        <button class="rsvp-button" (click)="closeWelcomePopup()">Okay</button>
+    </div>
+
+    <div class="rsvp-popup-window" id="guestWizard" style="display: none">
+        <h2>Add a Guest</h2>
+        <table clas="rsvp-form-table">
+            <tbody>
+                <tr>
+                    <td class="rsvp-form-label">
+                        Name
+                    </td>
+                    <td class="rsvp-form-input">
+                        <input type="text" id="guestNameInput" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rsvp-form-label">
+                        Age
+                    </td>
+                    <td class="rsvp-form-input">
+                        <input type="number" id="guestAgeInput" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="rsvp-button-add" (click)="addGuest()">
+            Add
+        </button>
+        <button class="rsvp-button-remove" (click)="cancelGuest()">
+            Cancel
+        </button>
+    </div>
+</div>
+
 <div class="rsvp-main">
-    <h1>RSVP</h1>
+    <h2>RSVP</h2>
     <h3>{{this.getInvitationHeading()}}</h3>
     <p>Please fill out the following information, so we may get your RSVP!</p>
     <table class="rsvp-form-table">
@@ -29,7 +69,7 @@
         </tbody>
     </table>
     <h3>Your Party</h3>
-    <button class="rsvp-button-add">
+    <button class="rsvp-button-add" (click)="openGuestWizard()">
         Add Members
     </button>
     <table>

@@ -6,9 +6,11 @@ import { ErrorService } from "../../services/error.service";
 import { UtilityService } from "../../services/utility.service";
 import { InvitationService } from "../../services/invitation.service";
 import { ApplicationConstants } from "../../application.constants";
+import { Event } from "../../data/event";
 import { Invitation } from "../../data/invitation";
 import { RSVP } from "../../data/rsvp";
 import { Guest } from "../../data/guest";
+import { EventService } from "../../services/event.service";
 
 @Component({
     selector: 'app-rsvp',
@@ -22,15 +24,18 @@ export class RsvpComponent {
     private readonly _rsvpService: RsvpService;
     private readonly _inviteService: InvitationService
     private readonly _utilityService: UtilityService;
+    private readonly _eventService: EventService;
     private readonly _errorService: ErrorService;
 
     private _invitation: Invitation | null = null;
+    private _event: Event | null = null;
     private _rsvp: RSVP;
 
     constructor(router: Router,
         rsvpService: RsvpService,
         inviteService: InvitationService,
         utilityService: UtilityService,
+        eventService: EventService,
         errorService: ErrorService
     )
     {
@@ -38,6 +43,7 @@ export class RsvpComponent {
         this._rsvpService = rsvpService;
         this._inviteService = inviteService;
         this._utilityService = utilityService;
+        this._eventService = eventService;
         this._errorService = errorService;
 
         this._rsvp = new RSVP();
@@ -55,10 +61,17 @@ export class RsvpComponent {
 
         try {
             let id = localStorage.getItem(ApplicationConstants.AppConstants.INVITE_ID_STORAGE);
-            if (id && !localStorage.getItem(ApplicationConstants.AppConstants.INVITE_OBJ_STORAGE)) {
-                let invite = await this._inviteService.GetInvitationAsync(id);
-                if (invite) {
-                    localStorage.setItem(ApplicationConstants.AppConstants.INVITE_OBJ_STORAGE, JSON.stringify(invite));
+            let inviteJson = localStorage.getItem(ApplicationConstants.AppConstants.INVITE_OBJ_STORAGE);
+            if (id && inviteJson) {
+                let inviteTemp = await this._inviteService.GetInvitationAsync(id);
+                if (inviteTemp) {
+                    let eventData = await this._eventService.GetEventByIdAsync(inviteTemp.eventId);
+                    if (!eventData) {
+                        this._router.navigateByUrl('not-found');
+                    }
+                    
+                    localStorage.setItem(ApplicationConstants.AppConstants.EVENT_OBJ_STORAGE, JSON.stringify(eventData));
+                    localStorage.setItem(ApplicationConstants.AppConstants.INVITE_OBJ_STORAGE, JSON.stringify(inviteTemp));
                 }
                 else {
                     this._router.navigateByUrl('not-found');
@@ -66,14 +79,17 @@ export class RsvpComponent {
             }
 
             let invite = localStorage.getItem(ApplicationConstants.AppConstants.INVITE_OBJ_STORAGE);
+            let event = localStorage.getItem(ApplicationConstants.AppConstants.EVENT_OBJ_STORAGE);
+            
+            this._event = JSON.parse(event!);
             this._invitation = JSON.parse(invite!);
 
             let rsvpGuid = await this._utilityService.GetNewGuidAsync();
             if (rsvpGuid) {
-                this._rsvp.Id = rsvpGuid;
+                this._rsvp.id = rsvpGuid;
             }
-            this._rsvp.InviteeId = this._invitation!.id;
-            this._rsvp.DateTime = new Date();
+            this._rsvp.inviteeId = this._invitation!.id;
+            this._rsvp.dateTime = new Date();
         }
         catch (exc) {
             this._errorService.SubmitErrorAsync(exc);
@@ -84,9 +100,26 @@ export class RsvpComponent {
         let attendingWeddingInput = document.getElementById("attendingWeddingInput");
         let attendingReceptionInput = document.getElementById("attendingReceptionInput");
         let noteInput = document.getElementById("noteInput");
-        this._rsvp.AttendingReception = attendingReceptionInput!.innerText == "true" ? true : false;
-        this._rsvp.AttendingWedding = attendingWeddingInput!.innerText == "true" ? true : false;
-        this._rsvp.Note = noteInput!.innerText;
+        this._rsvp.attendingReception = attendingReceptionInput!.innerText == "true" ? true : false;
+        this._rsvp.attendingWedding = attendingWeddingInput!.innerText == "true" ? true : false;
+        this._rsvp.note = noteInput!.innerText;
+    }
+    
+    getEventHeading(): string {
+        if (this._event) {
+            return this._event.name;
+        }
+        else {
+            return ``;
+        }
+    }
+    getInvitationNote(): string {
+        if (this._invitation) {
+            return this._invitation.noteToInvitee;
+        }
+        else {
+            return ``;
+        }
     }
 
     getInvitationHeading(): string {
@@ -99,12 +132,53 @@ export class RsvpComponent {
     }
 
     getGuestsFromRSVP(): Array<Guest> {
-        if (this._rsvp.Guests) {
-            return this._rsvp.Guests;
+        if (this._rsvp.guests) {
+            return this._rsvp.guests;
         }
         else {
-            this._rsvp.Guests = new Array<Guest>();
-            return this._rsvp.Guests;
+            this._rsvp.guests = new Array<Guest>();
+            return this._rsvp.guests;
         }
+    }
+
+    /* Page Inputs and Element Functions */
+
+    openPopupContainer() {
+        let popupContainer = document.getElementById("popupContainer")!;
+        popupContainer.style.display = "block";
+    }
+    closePopupContainer() {
+        let popupContainer = document.getElementById("popupContainer")!;
+        popupContainer.style.display = "none";
+    }
+
+    closeWelcomePopup() {
+        this.closePopupContainer();
+
+        let welcomeWindow = document.getElementById("welcomeWindow")!;
+        welcomeWindow.style.display = "none";
+    }
+
+    openGuestWizard() {
+        this.openPopupContainer();
+        let guestWizard = document.getElementById("guestWizard")!;
+        guestWizard.style.display = "block";
+    }
+    resetGuestWizardInput() {
+        let nameInput: HTMLInputElement = document.getElementById("guestNameInput")! as HTMLInputElement;
+        let ageInput: HTMLInputElement = document.getElementById("guestAgeInput")! as HTMLInputElement;
+
+        nameInput.value = "";
+        ageInput.value = "";
+    }
+
+    addGuest() {
+
+    }
+    cancelGuest() {
+        this.closePopupContainer();
+        let guestWizard = document.getElementById("guestWizard")!;
+        guestWizard.style.display = "none";
+        this.resetGuestWizardInput();
     }
 }

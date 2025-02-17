@@ -1,5 +1,6 @@
 export class Invitation {
     private _id: string = '';
+    private _eventId: string = '';
     private _name: string = '';
     private _weddingParty: boolean = false;
     private _designatedSeating: boolean = false;
@@ -16,6 +17,13 @@ export class Invitation {
     }
     set id(value: string) {
         this._id = value;
+    }
+
+    get eventId(): string {
+        return this._eventId;
+    }
+    set eventId(value: string) {
+        this._eventId = value;
     }
 
     get name(): string {

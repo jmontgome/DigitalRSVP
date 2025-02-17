@@ -137,6 +137,7 @@ namespace DigitalRSVP.WAPI
             services.AddSingleton<ConnectionOptions>(this.ConnectionOptions);
 
             Logger.LogInformation($"Adding Services");
+            services.AddSingleton<IEventService, EventService>();
             services.AddSingleton<IInvitationService, InvitationService>();
             services.AddSingleton<IRSVPService, RSVPService>();
 
@@ -145,6 +146,7 @@ namespace DigitalRSVP.WAPI
             services.AddControllers();
 
             Logger.LogInformation($"Adding Repositories");
+            services.AddSingleton<IEventRepository, EventRepository>();
             services.AddSingleton<IInvitationRepository, InvitationRepository>();
             services.AddSingleton<IRSVPRepository, RSVPRepository>();
 

@@ -17,6 +17,7 @@ namespace DigitalRSVP.WAPI.Repositories
         {
             Invitation inv = new Invitation();
             inv.Id = Guid.Parse(data["WorkItemId"].ToString()!);
+            inv.EventId = Guid.Parse(data["EventId"].ToString()!);
             inv.Name = data["Name"].ToString()!;
             inv.WeddingParty = bool.Parse(data["WeddingParty"].ToString()!);
             inv.DesignatedSeating = bool.Parse(data["DesignatedSeating"].ToString()!);

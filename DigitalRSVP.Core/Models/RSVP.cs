@@ -15,6 +15,19 @@
             }
         }
 
+        private Guid _eventId;
+        public Guid EventId
+        {
+            get
+            {
+                return this._eventId;
+            }
+            set
+            {
+                this._eventId = value;
+            }
+        }
+
         private Guid _inviteeId;
         public Guid InviteeId
         {

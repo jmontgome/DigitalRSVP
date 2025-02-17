@@ -19,6 +19,7 @@ namespace DigitalRSVP.WAPI.Repositories
         {
             RSVP rsvp = new RSVP();
             rsvp.Id = Guid.Parse(data["WorkItemId"].ToString()!);
+            rsvp.EventId = Guid.Parse(data["EventId"].ToString()!);
             rsvp.InviteeId = Guid.Parse(data["InviteeId"].ToString()!);
             rsvp.DateTime = DateTime.Parse(data["DateTime"].ToString()!);
             rsvp.Guests = JsonConvert.DeserializeObject<IEnumerable<Guest>>(data["GuestsData"].ToString()!);

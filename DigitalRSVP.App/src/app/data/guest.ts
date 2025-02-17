@@ -12,31 +12,31 @@ export class Guest {
 
     constructor() { }
 
-    get Id(): string {
+    get id(): string {
         return this._id;
     }
-    set Id(value: string) {
+    set id(value: string) {
         this._id = value;
     }
 
-    get RSVPId(): string {
+    get rsvpId(): string {
         return this._rsvpId;
     }
-    set RSVPId(value: string) {
+    set rsvpId(value: string) {
         this._rsvpId = value;
     }
 
-    get Name(): string {
+    get name(): string {
         return this._name;
     }
-    set Name(value: string) {
+    set name(value: string) {
         this._name = value;
     }
 
-    get Age(): Age | null {
+    get age(): Age | null {
         return this._age;
     }
-    set Age(value: Age) {
+    set age(value: Age) {
         this._age = value;
     }
 }

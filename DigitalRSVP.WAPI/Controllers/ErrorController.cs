@@ -6,6 +6,8 @@ using System.Net.Mime;
 
 namespace DigitalRSVP.WAPI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class ErrorController : Controller
     {
         private readonly ILogger<ErrorController> _logger;

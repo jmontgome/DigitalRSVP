@@ -8,6 +8,30 @@
     padding-right: 10%;
 }
 
+.rsvp-popup-container {
+    position: fixed;
+    z-index: 5;
+    align-content: -webkit-center;
+    background-color: rgba(31, 31, 31, 0.541);
+    width: 100vw;
+    height: 100vh;
+}
+.rsvp-popup-window {
+    position: fixed;
+    border-color: rgb(61, 61, 61);
+    border-width: 1px;
+    border-style: solid;
+    background-color: black;
+    border-radius: 15px;
+    text-align: center;
+    place-self: center;
+    top: 30vh;
+    left: 5vh;
+    right: 5vh;
+    padding: 5%;
+    max-width: 700px;
+}
+
 .rsvp-form-table {
     text-align: center;
     width: 80vw;
@@ -38,6 +62,20 @@
 .rsvp-button {
     margin-left: 2vw;
     margin-right: 2vw;
+    font-size: medium;
+    background-color: rgb(2, 175, 255);
+    border-color: rgb(98, 203, 226);
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+}
+.rsvp-button:active {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    font-size: medium;
+    background-color: rgb(2, 247, 255);
+    border-color: rgb(98, 149, 226);
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
 }
 .rsvp-button-add {
     margin-left: 2vw;
@@ -60,6 +98,11 @@
 .rsvp-button-remove {
     margin-left: 2vw;
     margin-right: 2vw;
+    font-size: large;
+    background-color: rgb(255, 0, 0);
+    border-color: rgb(151, 43, 0);
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
 }
 .rsvp-button-img {
     width: 80%;
@@ -75,4 +118,16 @@
 .rsvp-dropdown {
     border-radius: 5px;
     font-size: large;
+}
+
+.rsvp-input-container {
+    
+}
+
+.rsvp-input-label-side {
+
+}
+
+.rsvp-input-text {
+
 }

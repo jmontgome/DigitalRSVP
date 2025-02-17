@@ -9,6 +9,7 @@ export class ApplicationConstants {
   public static AppConstants = class {
     public static INVITE_ID_STORAGE: string = "inviteId";
     public static INVITE_OBJ_STORAGE: string = "invite";
+    public static EVENT_OBJ_STORAGE: string = "event";
     public static RSVP_OBJ_STORAGE: string = "rsvp";
 
     public static HASOPENED_FLAG_STORAGE: string = "hasOpenedInv";
@@ -39,6 +40,8 @@ export class ApplicationConstants {
     public static TEST_API_URL: string = "https://digitalrsvp-service-dev.azurewebsites.net/";
     public static PROD_API_URL: string = "https://digitalrsvp-service.azurewebsites.net/";
 
+    public static Event_GetEvent: string = "Event/id"
+
     public static Error_Post: string = "Error";
 
     public static Utilities_GetNewGuid: string = "Utility/NewGuid";
@@ -46,6 +49,6 @@ export class ApplicationConstants {
     public static Invitation_GetInvite: string = "Invitation/id";
 
     public static Rsvp_GetRsvp: string = "RSVP/id";
-    public static Rsvp_GetRsvp_ByInvite: string = "RSVP/invitation=";
+    public static Rsvp_GetRsvp_ByInvite: string = "RSVP/invitation";
   }
 }
