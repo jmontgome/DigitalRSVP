@@ -84,12 +84,18 @@ export class RsvpComponent {
             this._event = JSON.parse(event!);
             this._invitation = JSON.parse(invite!);
 
-            let rsvpGuid = await this._utilityService.GetNewGuidAsync();
-            if (rsvpGuid) {
-                this._rsvp.id = rsvpGuid;
+            let rsvpInServer = await this._rsvpService.GetRsvpByInvitee(this._invitation!.id);
+            if (rsvpInServer) {
+                //Mark page as RSVP is being edited and make sure RSVP is entered as an edit as opposed to submission.
             }
-            this._rsvp.inviteeId = this._invitation!.id;
-            this._rsvp.dateTime = new Date();
+            else {
+                let rsvpGuid = await this._utilityService.GetNewGuidAsync();
+                if (rsvpGuid) {
+                    this._rsvp.id = rsvpGuid;
+                }
+                this._rsvp.inviteeId = this._invitation!.id;
+                this._rsvp.dateTime = new Date();
+            }
         }
         catch (exc) {
             this._errorService.SubmitErrorAsync(exc);
@@ -103,6 +109,7 @@ export class RsvpComponent {
         this._rsvp.attendingReception = attendingReceptionInput!.innerText == "true" ? true : false;
         this._rsvp.attendingWedding = attendingWeddingInput!.innerText == "true" ? true : false;
         this._rsvp.note = noteInput!.innerText;
+        this._router.navigateByUrl('complete');
     }
     
     getEventHeading(): string {
@@ -120,6 +127,14 @@ export class RsvpComponent {
         else {
             return ``;
         }
+    }
+    getInvitationSpecialDetails(): string {
+        if (this._invitation) {
+            if (this._invitation.weddingParty) {
+                return `You have also been reserved as part of the wedding party, because of how special you are!`;
+            }
+        }
+        return ``;
     }
 
     getInvitationHeading(): string {
@@ -150,6 +165,19 @@ export class RsvpComponent {
     closePopupContainer() {
         let popupContainer = document.getElementById("popupContainer")!;
         popupContainer.style.display = "none";
+    }
+
+    openDuplicatePopup() {
+        this.openPopupContainer();
+
+        let duplicateWindow = document.getElementById("duplicateWindow")!;
+        duplicateWindow.style.display = "block";
+    }
+    closeDuplicatePopup() {
+        this.closePopupContainer();
+
+        let duplicateWindow = document.getElementById("duplicateWindow")!;
+        duplicateWindow.style.display = "none";
     }
 
     closeWelcomePopup() {

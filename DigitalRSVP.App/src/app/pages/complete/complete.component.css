@@ -1,0 +1,9 @@
+.rsvp-main {
+    text-align: -webkit-center;
+    margin-top: 5vh;
+    font-size: large;
+    overflow-y: auto;
+    max-height: 85vh;
+    padding-left: 10%;
+    padding-right: 10%;
+}

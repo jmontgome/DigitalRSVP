@@ -2,9 +2,17 @@
     <div class="rsvp-popup-window" id="welcomeWindow">
         <p>You've Been Invited To</p>
         <h2>{{this.getEventHeading()}}</h2>
-        <p>A Special Note From Them:</p>
+        <p>A Special Note From Us:</p>
         <h3>{{getInvitationNote()}}</h3>
+        <p>{{getInvitationSpecialDetails()}}</p>
         <button class="rsvp-button" (click)="closeWelcomePopup()">Okay</button>
+    </div>
+
+    <div class="rsvp-popup-window" id="duplicateWindow" style="display: none;">
+        <h2>Welcome Back!</h2>
+        <p>You've already submitted an RSVP, if you need to make a change please reach out to us and 
+            notify us of your change!
+        </p>
     </div>
 
     <div class="rsvp-popup-window" id="guestWizard" style="display: none">
