@@ -1,4 +1,4 @@
-/****** Object:  Table [dbo].[RSVP]    Script Date: 2/23/2025 1:43:06 PM ******/
+/****** Object:  Table [dbo].[RSVP]    Script Date: 2/23/2025 11:41:35 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -8,7 +8,6 @@ GO
 CREATE TABLE [dbo].[RSVP](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[WorkItemId] [uniqueidentifier] NOT NULL,
-	[EventId] [uniqueidentifier] NOT NULL,
 	[InviteeId] [uniqueidentifier] NOT NULL,
 	[DateTime] [datetime] NOT NULL,
 	[Note] [varchar](1080) NOT NULL,

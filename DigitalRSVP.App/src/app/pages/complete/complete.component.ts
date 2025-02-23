@@ -75,23 +75,6 @@ export class CompleteComponent {
     }
 
     getMessageBodyForPage() {
-        let message = 'Your RSVP has been submitted! ';
-
-        if (this._rsvp!.attendingReception == true &&
-            this._rsvp!.attendingWedding == false
-        ) {
-            message += `\r\n We're excited to see you at the reception!`;
-        }
-        else if (this._rsvp!.attendingWedding == true &&
-            this._rsvp!.attendingReception == false) {
-            message += `\r\n We're excited to see you at the wedding!`;
-        }
-        else if (this._rsvp!.attendingWedding == true &&
-            this._rsvp!.attendingReception == true) {
-            message += `\r\n We're excited to see you at the wedding!`;
-        }
-        else {
-            message += `\r\n We understand you can't and hope to see you soon!`;
-        }
+        let message = 'Your RSVP has been submitted!';
     }
 }

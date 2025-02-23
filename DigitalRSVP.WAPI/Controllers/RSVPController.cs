@@ -93,16 +93,20 @@ namespace DigitalRSVP.WAPI.Controllers
         }
 
         [HttpPost]
-        [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> SubmitRSVP(object rsvp)
+        public async Task<IActionResult> SubmitRSVP()
         {
             Guid requestId = Guid.NewGuid();
             _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ {this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
             try
             {
-                if (rsvp != null)
+                string bodyText;
+                using (StreamReader bodyReader = new StreamReader(HttpContext.Request.Body))
                 {
-                    RSVP? submittedRSVP = JsonConvert.DeserializeObject<RSVP>(rsvp.ToString()!);
+                    bodyText = await bodyReader.ReadToEndAsync();
+                }
+                if (!string.IsNullOrWhiteSpace(bodyText))
+                {
+                    RSVP? submittedRSVP = JsonConvert.DeserializeObject<RSVP>(bodyText);
                     if (submittedRSVP != null)
                     {
                         if (await _invitationService.InvitationAuthorizedAsync(submittedRSVP.InviteeId))
@@ -123,8 +127,9 @@ namespace DigitalRSVP.WAPI.Controllers
                             throw new UnauthorizedAccessException($"User gave an invalid invitation ID, {submittedRSVP.InviteeId}.");
                         }
                     }
+                    throw new InvalidDataException($"Something went wrong with the data given. \r\n\tContent: {bodyText}");
                 }
-                throw new InvalidDataException($"Something went wrong with the data given. \r\n\tContent: {JsonConvert.SerializeObject(rsvp)}");
+                throw new InvalidDataException($"No Content was provided.");
             }
             catch (Exception exc)
             {
@@ -136,16 +141,20 @@ namespace DigitalRSVP.WAPI.Controllers
         }
 
         [HttpPut]
-        [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> EditRSVP(object rsvp)
+        public async Task<IActionResult> EditRSVP()
         {
             Guid requestId = Guid.NewGuid();
             _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ {this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
             try
             {
-                if (rsvp != null)
+                string bodyText;
+                using (StreamReader bodyReader = new StreamReader(HttpContext.Request.Body))
                 {
-                    RSVP? submittedRSVP = JsonConvert.DeserializeObject<RSVP>(rsvp.ToString()!);
+                    bodyText = bodyReader.ReadToEnd();
+                }
+                if (!string.IsNullOrWhiteSpace(bodyText))
+                {
+                    RSVP? submittedRSVP = JsonConvert.DeserializeObject<RSVP>(bodyText);
                     if (submittedRSVP != null)
                     {
                         if (await _invitationService.InvitationAuthorizedAsync(submittedRSVP.InviteeId))
@@ -166,8 +175,9 @@ namespace DigitalRSVP.WAPI.Controllers
                             throw new UnauthorizedAccessException($"User gave an invalid invitation ID, Invitation ID: {submittedRSVP.InviteeId}.");
                         }
                     }
+                    throw new InvalidDataException($"Something went wrong with the data given. \r\n\tContent: {bodyText}");
                 }
-                throw new InvalidDataException($"Something went wrong with the data given. \r\n\tContent: {JsonConvert.SerializeObject(rsvp)}");
+                throw new InvalidDataException($"No Content was provided.");
             }
             catch (Exception exc)
             {

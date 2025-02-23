@@ -9,6 +9,8 @@ export class Guest {
     private _rsvpId: string = '';
     private _name: string = '';
     private _age: Age | null = null;
+    private _attendingWedding: boolean = false;
+    private _attendingReception: boolean = false;
 
     constructor() { }
 
@@ -38,5 +40,39 @@ export class Guest {
     }
     set age(value: Age) {
         this._age = value;
+    }
+
+    get attendingWedding(): boolean {
+        return this._attendingWedding;
+    }
+    set attendingWedding(value: boolean) {
+        this._attendingWedding = value;
+    }
+
+    get attendingReception(): boolean {
+        return this._attendingReception;
+    }
+    set attendingReception(value: boolean) {
+        this._attendingReception = value;
+    }
+
+    ageAsString(): string {
+        switch (this._age) {
+            case Age.INFANT: return "Infant/Toddler";
+            case Age.MINOR: return "Child/Minor";
+            case Age.ADULT: return "Adult";
+            default: return "";
+        }
+    }
+    
+    SerializeToJson() {
+        return JSON.stringify({
+            Id: this._id,
+            RSVPId: this._rsvpId,
+            Name: this._name,
+            Age: this._age,
+            AttendingWedding: this._attendingWedding,
+            AttendingReception: this._attendingReception
+        })
     }
 }

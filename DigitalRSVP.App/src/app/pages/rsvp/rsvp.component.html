@@ -17,7 +17,7 @@
 
     <div class="rsvp-popup-window" id="guestWizard" style="display: none">
         <h2>Add a Guest</h2>
-        <table clas="rsvp-form-table">
+        <table class="rsvp-form-table">
             <tbody>
                 <tr>
                     <td class="rsvp-form-label">
@@ -32,12 +32,33 @@
                         Age
                     </td>
                     <td class="rsvp-form-input">
-                        <select class="rsvp-dropdown" id="ageInput">
+                        <select class="rsvp-dropdown" id="guestAgeInput">
                             <option value="0">Infant/Toddler</option>
                             <option value="1">Child/Minor</option>
                             <option value="2">Adult</option>
                         </select>
-                        <input type="number" id="guestAgeInput" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rsvp-form-label">
+                        <p>Attending Wedding</p>
+                    </td>
+                    <td class="rsvp-form-input">
+                        <select class="rsvp-dropdown" name="attendingWedding" id="attendingWeddingInput">
+                            <option value="true">Yes</option>
+                            <option value="false" selected="selected">No</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rsvp-form-label">
+                        <p>Attending Reception</p>
+                    </td>
+                    <td class="rsvp-form-input">
+                        <select class="rsvp-dropdown" name="attendingReception" id="attendingReceptionInput">
+                            <option value="true">Yes</option>
+                            <option value="false" selected="selected">No</option>
+                        </select>
                     </td>
                 </tr>
             </tbody>
@@ -55,44 +76,23 @@
     <h2>RSVP</h2>
     <h3>{{this.getInvitationHeading()}}</h3>
     <p>Please fill out the following information, so we may get your RSVP!</p>
-    <table class="rsvp-form-table">
-        <tbody>
-            <tr>
-                <td class="rsvp-form-label">
-                    <p>Attending Wedding</p>
-                </td>
-                <td class="rsvp-form-input">
-                    <select class="rsvp-dropdown" name="attendingWedding" id="attendingWeddingInput">
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="rsvp-form-label">
-                    <p>Attending Reception</p>
-                </td>
-                <td class="rsvp-form-input">
-                    <select class="rsvp-dropdown" name="attendingReception" id="attendingReceptionInput">
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     <h3>Your Party</h3>
     <button class="rsvp-button-add" (click)="openGuestWizard()">
         Add Members
     </button>
     <table>
         <tbody>
-            <tr *ngFor="let guest of getGuestsFromRSVP();">
+            <tr *ngFor="let guest of getGuestsFromRSVP()">
                 <td>
                     <p>{{guest.name}}</p>
                 </td>
                 <td>
-                    <p>{{guest.age}}</p>
+                    <p>({{getGuestAgeString(guest)}})</p>
+                </td>
+                <td>
+                    <button class="rsvp-button-remove" (click)="removeGuestFromList(guest)">
+                        X
+                    </button>
                 </td>
             </tr>
         </tbody>

@@ -1,3 +1,5 @@
+import { HttpHeaders } from "@angular/common/http";
+
 export enum EnvironmentType {
   DEV = 0,
   TEST = 1,
@@ -6,13 +8,22 @@ export enum EnvironmentType {
 }
 
 export class ApplicationConstants {
-  public static AppConstants = class {
+    public static AppConstants = class {
     public static INVITE_ID_STORAGE: string = "inviteId";
     public static INVITE_OBJ_STORAGE: string = "invite";
     public static EVENT_OBJ_STORAGE: string = "event";
     public static RSVP_OBJ_STORAGE: string = "rsvp";
 
     public static HASOPENED_FLAG_STORAGE: string = "hasOpenedInv";
+
+    public static GetHttpHeaders() : HttpHeaders {
+      let httpDict = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+      let headers = new HttpHeaders(httpDict);
+      return headers;
+    }
   }
 
   public static ApiConstants = class {

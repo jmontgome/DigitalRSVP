@@ -90,18 +90,22 @@ export class RsvpComponent {
             this._event = JSON.parse(event!);
             this._invitation = JSON.parse(invite!);
 
-            let rsvpInServer = await this._rsvpService.GetRsvpByInvitee(this._invitation!.id);
-            if (rsvpInServer) {
-                //Mark page as RSVP is being edited and make sure RSVP is entered as an edit as opposed to submission.
-                this.setupEditMode();
-            }
-            else {
-                let rsvpGuid = await this._utilityService.GetNewGuidAsync();
-                if (rsvpGuid) {
-                    this._rsvp.id = rsvpGuid;
+            if (this._event && this._invitation) {
+                let rsvpInServer = await this._rsvpService.GetRsvpByInvitee(this._invitation!.id);
+                if (rsvpInServer) {
+                    //Mark page as RSVP is being edited and make sure RSVP is entered as an edit as opposed to submission.
+                    this._rsvp = rsvpInServer;
+                    this.setupEditMode();
                 }
-                this._rsvp.inviteeId = this._invitation!.id;
-                this._rsvp.dateTime = new Date();
+                else {
+                    let rsvpGuid = await this._utilityService.GetNewGuidAsync();
+                    if (rsvpGuid) {
+                        this._rsvp.id = rsvpGuid;
+                    }
+                    this._rsvp.inviteeId = this._invitation.id;
+                    this._rsvp.eventId = this._event.id;
+                    this._rsvp.dateTime = new Date();
+                }
             }
         }
         catch (exc) {
@@ -111,31 +115,24 @@ export class RsvpComponent {
 
     async submitRsvp() {
         this.syncHtmlInputToRsvp();
+        localStorage.setItem(ApplicationConstants.AppConstants.RSVP_OBJ_STORAGE, JSON.stringify(this._rsvp));
+
         if (this._editMode) {
-            this._rsvpService.SubmitRSVPEdit(this._rsvp);
+            await this._rsvpService.SubmitRSVPEdit(this._rsvp);
         }
         else {
-            this._rsvpService.SubmitRSVP(this._rsvp);
+            await this._rsvpService.SubmitRSVP(this._rsvp);
         }
+
         this._router.navigateByUrl('complete');
     }
 
     syncHtmlInputToRsvp() {
-        let attendingWeddingInput = document.getElementById("attendingWeddingInput");
-        let attendingReceptionInput = document.getElementById("attendingReceptionInput");
-        let noteInput = document.getElementById("noteInput");
-
-        this._rsvp.attendingReception = attendingReceptionInput!.innerText == "true" ? true : false;
-        this._rsvp.attendingWedding = attendingWeddingInput!.innerText == "true" ? true : false;
-        this._rsvp.note = noteInput!.innerText;
+        let noteInput = document.getElementById("noteInput") as HTMLTextAreaElement
+        this._rsvp.note = noteInput.value;
     }
     syncRsvpToHtmlInput() {
-        let attendingWeddingInput = document.getElementById("attendingWeddingInput") as HTMLSelectElement;
-        let attendingReceptionInput = document.getElementById("attendingReceptionInput") as HTMLSelectElement;
         let noteInput = document.getElementById("noteInput") as HTMLTextAreaElement;
-
-        attendingWeddingInput.value = `${this._rsvp.attendingWedding}`;
-        attendingReceptionInput.value = `${this._rsvp.attendingReception}`;
         noteInput.value = this._rsvp.note;        
     }
 
@@ -184,12 +181,17 @@ export class RsvpComponent {
 
     getGuestsFromRSVP(): Array<Guest> {
         if (this._rsvp.guests) {
-            return this._rsvp.guests;
+            return this._rsvp.guests as Array<Guest>;
         }
         else {
             this._rsvp.guests = new Array<Guest>();
             return this._rsvp.guests;
         }
+    }
+    getGuestAgeString(guest: Guest) {
+        let guestTyped: Guest = new Guest();
+        guestTyped.age = guest.age!;
+        return guestTyped.ageAsString();
     }
 
     /* Page Inputs and Element Functions */
@@ -238,13 +240,18 @@ export class RsvpComponent {
     async addGuest() {
         let nameInput: HTMLInputElement = document.getElementById("guestNameInput")! as HTMLInputElement;
         let ageInput: HTMLSelectElement = document.getElementById("guestAgeInput")! as HTMLSelectElement;
+        let weddingInput: HTMLSelectElement = document.getElementById("attendingWeddingInput")! as HTMLSelectElement;
+        let receptionInput: HTMLSelectElement = document.getElementById("attendingReceptionInput")! as HTMLSelectElement;
 
         if (!IsNullOrWhitespace(nameInput.value) && !IsNullOrWhitespace(ageInput.value)) {
             let newGuest: Guest = new Guest();
             let newGuestId: string = await this._utilityService.GetNewGuidAsync();
             newGuest.id = newGuestId;
+            newGuest.rsvpId = this._rsvp.id;
             newGuest.age = Number.parseInt(ageInput.value);
             newGuest.name = nameInput.value;
+            newGuest.attendingReception = (receptionInput.value == 'true' ? true : false);
+            newGuest.attendingWedding = (weddingInput.value == 'true' ? true : false);
 
             if (!this._rsvp.guests) {
                 this._rsvp.guests = new Array<Guest>();
@@ -263,5 +270,16 @@ export class RsvpComponent {
         let guestWizard = document.getElementById("guestWizard")!;
         guestWizard.style.display = "none";
         this.resetGuestWizardInput();
+    }
+
+    removeGuestFromList(guest: Guest) {
+        let newArray: Array<Guest> = new Array<Guest>();
+        this._rsvp.guests!.forEach(iteratorGuest => {
+            if (iteratorGuest.id != guest.id) {
+                newArray.push(iteratorGuest);
+            }
+        });
+
+        this._rsvp.guests = newArray;
     }
 }

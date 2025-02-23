@@ -70,32 +70,6 @@
             }
         }
 
-        private bool _attendingWedding;
-        public bool AttendingWedding
-        {
-            get
-            {
-                return this._attendingWedding;
-            }
-            set
-            {
-                this._attendingWedding = value;
-            }
-        }
-
-        private bool _attendingReception;
-        public bool AttendingReception
-        {
-            get
-            {
-                return this._attendingReception;
-            }
-            set
-            {
-                this._attendingReception = value;
-            }
-        }
-
         private string? _note;
         public string? Note
         {

@@ -2,7 +2,6 @@
 using DigitalRSVP.Core.Options;
 using DigitalRSVP.WAPI.Repositories.Interfaces;
 using Microsoft.Data.SqlClient;
-using Newtonsoft.Json;
 using System.Data;
 
 namespace DigitalRSVP.WAPI.Repositories
@@ -22,9 +21,6 @@ namespace DigitalRSVP.WAPI.Repositories
             rsvp.EventId = Guid.Parse(data["EventId"].ToString()!);
             rsvp.InviteeId = Guid.Parse(data["InviteeId"].ToString()!);
             rsvp.DateTime = DateTime.Parse(data["DateTime"].ToString()!);
-            rsvp.Guests = JsonConvert.DeserializeObject<IEnumerable<Guest>>(data["GuestsData"].ToString()!);
-            rsvp.AttendingWedding = bool.Parse(data["AttendingWedding"].ToString()!);
-            rsvp.AttendingReception = bool.Parse(data["AttendingReception"].ToString()!);
             rsvp.Note = data["Note"].ToString();
             rsvp.Created_Date = DateTime.Parse(data["Created_Date"].ToString()!);
             rsvp.Updated_Date = DateTime.Parse(data["Updated_Date"].ToString()!);
@@ -69,11 +65,9 @@ namespace DigitalRSVP.WAPI.Repositories
             List<SqlParameter> param = new List<SqlParameter>()
             {
                 new SqlParameter("@Id", rsvp.Id),
+                new SqlParameter("@EventId", rsvp.EventId),
                 new SqlParameter("@InviteeId", rsvp.InviteeId),
                 new SqlParameter("@DateTime", rsvp.DateTime),
-                new SqlParameter("@GuestsData", JsonConvert.SerializeObject(rsvp.Guests)),
-                new SqlParameter("@AttendingWedding", rsvp.AttendingWedding == true ? 1 : 0),
-                new SqlParameter("@AttendingReception", rsvp.AttendingReception == true ? 1 : 0),
                 new SqlParameter("@Note", rsvp.Note)
             };
             await this.ExecuteCommandAsync(KnownSQL.KnownStoredProcedures.RSVP_Submit, param.ToArray());
@@ -83,11 +77,9 @@ namespace DigitalRSVP.WAPI.Repositories
             List<SqlParameter> param = new List<SqlParameter>()
             {
                 new SqlParameter("@Id", rsvp.Id),
+                new SqlParameter("@EventId", rsvp.EventId),
                 new SqlParameter("@InviteeId", rsvp.InviteeId),
                 new SqlParameter("@DateTime", rsvp.DateTime),
-                new SqlParameter("@GuestsData", JsonConvert.SerializeObject(rsvp.Guests)),
-                new SqlParameter("@AttendingWedding", rsvp.AttendingWedding == true ? 1 : 0),
-                new SqlParameter("@AttendingReception", rsvp.AttendingReception == true ? 1 : 0),
                 new SqlParameter("@Note", rsvp.Note)
             };
             await this.ExecuteCommandAsync(KnownSQL.KnownStoredProcedures.RSVP_Update, param.ToArray());

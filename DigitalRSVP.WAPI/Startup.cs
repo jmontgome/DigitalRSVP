@@ -149,6 +149,7 @@ namespace DigitalRSVP.WAPI
             services.AddSingleton<IEventRepository, EventRepository>();
             services.AddSingleton<IInvitationRepository, InvitationRepository>();
             services.AddSingleton<IRSVPRepository, RSVPRepository>();
+            services.AddSingleton<IGuestRepository, GuestRepository>();
 
 #if RELEASE
             if (AppEnvVariables != null)

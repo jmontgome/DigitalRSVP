@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ErrorService } from "./error.service";
 import { RSVP } from "../data/rsvp";
@@ -50,7 +50,7 @@ export class RsvpService {
 
     public async SubmitRSVP(rsvp: RSVP) {
         try {
-            this._httpClient.post(`${ApplicationConstants.ApiConstants.GetApiUrl()}${ApplicationConstants.ApiConstants.Rsvp_Submit}`, JSON.stringify(rsvp));
+            await this._httpClient.post(`${ApplicationConstants.ApiConstants.GetApiUrl()}${ApplicationConstants.ApiConstants.Rsvp_Submit}`, rsvp.SerializeToJson()).subscribe();
         }
         catch (exc) {
             this._errorService.SubmitErrorAsync(exc);
@@ -59,7 +59,7 @@ export class RsvpService {
 
     public async SubmitRSVPEdit(rsvp: RSVP) {
         try {
-            this._httpClient.put(`${ApplicationConstants.ApiConstants.GetApiUrl()}${ApplicationConstants.ApiConstants.Rsvp_Submit}`, JSON.stringify(rsvp));
+            await this._httpClient.put(`${ApplicationConstants.ApiConstants.GetApiUrl()}${ApplicationConstants.ApiConstants.Rsvp_Edit}`, rsvp.SerializeToJson()).subscribe();
         }
         catch (exc) {
             this._errorService.SubmitErrorAsync(exc);

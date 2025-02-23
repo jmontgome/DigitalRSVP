@@ -6,8 +6,6 @@ export class RSVP {
     private _inviteeId: string = '';
     private _datetime: Date | null = null;
     private _guests: Array<Guest> | null = null;
-    private _attendingWedding: boolean = false;
-    private _attendingReception: boolean = false;
     private _note: string = '';
     private _createdDate: Date | null = null;
     private _updatedDate: Date | null = null;
@@ -51,20 +49,6 @@ export class RSVP {
         this._guests = value;
     }
 
-    get attendingWedding(): boolean {
-        return this._attendingWedding;
-    }
-    set attendingWedding(value: boolean) {
-        this._attendingWedding = value;
-    }
-
-    get attendingReception(): boolean {
-        return this._attendingReception;
-    }
-    set attendingReception(value: boolean) {
-        this._attendingReception = value;
-    }
-
     get note(): string {
         return this._note;
     }
@@ -84,5 +68,23 @@ export class RSVP {
     }
     set updatedDate(value: Date) {
         this._updatedDate = value;
+    }
+
+    SerializeToJson(): string {
+        let json = {
+            Id: this._id,
+            EventId: this._eventId,
+            InviteeId: this._inviteeId,
+            DateTime: this._datetime,
+            Guests: this._guests,
+            Note: this._note
+        };
+        if (this._guests) {
+            this._guests.forEach(guest => {
+                let index = json.Guests!.indexOf(guest);
+                json.Guests![index] = JSON.parse(guest.SerializeToJson());
+            });
+        }
+        return JSON.stringify(json);
     }
 }
