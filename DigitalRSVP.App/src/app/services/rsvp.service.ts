@@ -46,5 +46,23 @@ export class RsvpService {
                 this._errorService.SubmitErrorAsync(exc);
             }
         })
-    } 
+    }
+
+    public async SubmitRSVP(rsvp: RSVP) {
+        try {
+            this._httpClient.post(`${ApplicationConstants.ApiConstants.GetApiUrl()}${ApplicationConstants.ApiConstants.Rsvp_Submit}`, JSON.stringify(rsvp));
+        }
+        catch (exc) {
+            this._errorService.SubmitErrorAsync(exc);
+        }
+    }
+
+    public async SubmitRSVPEdit(rsvp: RSVP) {
+        try {
+            this._httpClient.put(`${ApplicationConstants.ApiConstants.GetApiUrl()}${ApplicationConstants.ApiConstants.Rsvp_Submit}`, JSON.stringify(rsvp));
+        }
+        catch (exc) {
+            this._errorService.SubmitErrorAsync(exc);
+        }
+    }
 }

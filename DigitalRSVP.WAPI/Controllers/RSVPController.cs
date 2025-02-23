@@ -135,7 +135,7 @@ namespace DigitalRSVP.WAPI.Controllers
             }
         }
 
-        [HttpPatch]
+        [HttpPut]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> EditRSVP(object rsvp)
         {

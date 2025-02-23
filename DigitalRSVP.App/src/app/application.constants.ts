@@ -50,5 +50,7 @@ export class ApplicationConstants {
 
     public static Rsvp_GetRsvp: string = "RSVP/id";
     public static Rsvp_GetRsvp_ByInvite: string = "RSVP/invitation";
+    public static Rsvp_Submit: string = "RSVP";
+    public static Rsvp_Edit: string = "RSVP";
   }
 }

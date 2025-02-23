@@ -32,6 +32,11 @@
                         Age
                     </td>
                     <td class="rsvp-form-input">
+                        <select class="rsvp-dropdown" id="ageInput">
+                            <option value="0">Infant/Toddler</option>
+                            <option value="1">Child/Minor</option>
+                            <option value="2">Adult</option>
+                        </select>
                         <input type="number" id="guestAgeInput" />
                     </td>
                 </tr>
@@ -84,10 +89,10 @@
         <tbody>
             <tr *ngFor="let guest of getGuestsFromRSVP();">
                 <td>
-                    <p>{{guest.Name}}</p>
+                    <p>{{guest.name}}</p>
                 </td>
                 <td>
-                    <p>{{guest.Age}}</p>
+                    <p>{{guest.age}}</p>
                 </td>
             </tr>
         </tbody>
@@ -97,7 +102,10 @@
     </label>
     <textarea class="rsvp-note-input" id="noteInput"></textarea>
 
-    <button class="rsvp-button-add" (click)="submitRsvp()">
+    <button class="rsvp-button-add" *ngIf="isEditMode()" (click)="submitRsvp()">
+        Save Edit
+    </button>
+    <button class="rsvp-button-add" *ngIf="!isEditMode()" (click)="submitRsvp()">
         Submit
     </button>
 </div>

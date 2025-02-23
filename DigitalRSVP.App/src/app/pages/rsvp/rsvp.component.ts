@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from "@angular/core";
+import { Component, NgModule, OnInit, inject } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { RsvpService } from "../../services/rsvp.service";
@@ -6,13 +6,17 @@ import { ErrorService } from "../../services/error.service";
 import { UtilityService } from "../../services/utility.service";
 import { InvitationService } from "../../services/invitation.service";
 import { ApplicationConstants } from "../../application.constants";
+import { IsNullOrWhitespace } from "../../internal/string";
 import { Event } from "../../data/event";
 import { Invitation } from "../../data/invitation";
 import { RSVP } from "../../data/rsvp";
 import { Guest } from "../../data/guest";
 import { EventService } from "../../services/event.service";
+import { CommonModule } from "@angular/common";
 
 @Component({
+    standalone: true,
+    imports: [CommonModule],
     selector: 'app-rsvp',
     templateUrl: './rsvp.component.html',
     styleUrl: './rsvp.component.css'
@@ -26,6 +30,8 @@ export class RsvpComponent {
     private readonly _utilityService: UtilityService;
     private readonly _eventService: EventService;
     private readonly _errorService: ErrorService;
+
+    private _editMode: boolean = false;
 
     private _invitation: Invitation | null = null;
     private _event: Event | null = null;
@@ -87,6 +93,7 @@ export class RsvpComponent {
             let rsvpInServer = await this._rsvpService.GetRsvpByInvitee(this._invitation!.id);
             if (rsvpInServer) {
                 //Mark page as RSVP is being edited and make sure RSVP is entered as an edit as opposed to submission.
+                this.setupEditMode();
             }
             else {
                 let rsvpGuid = await this._utilityService.GetNewGuidAsync();
@@ -103,13 +110,42 @@ export class RsvpComponent {
     }
 
     async submitRsvp() {
+        this.syncHtmlInputToRsvp();
+        if (this._editMode) {
+            this._rsvpService.SubmitRSVPEdit(this._rsvp);
+        }
+        else {
+            this._rsvpService.SubmitRSVP(this._rsvp);
+        }
+        this._router.navigateByUrl('complete');
+    }
+
+    syncHtmlInputToRsvp() {
         let attendingWeddingInput = document.getElementById("attendingWeddingInput");
         let attendingReceptionInput = document.getElementById("attendingReceptionInput");
         let noteInput = document.getElementById("noteInput");
+
         this._rsvp.attendingReception = attendingReceptionInput!.innerText == "true" ? true : false;
         this._rsvp.attendingWedding = attendingWeddingInput!.innerText == "true" ? true : false;
         this._rsvp.note = noteInput!.innerText;
-        this._router.navigateByUrl('complete');
+    }
+    syncRsvpToHtmlInput() {
+        let attendingWeddingInput = document.getElementById("attendingWeddingInput") as HTMLSelectElement;
+        let attendingReceptionInput = document.getElementById("attendingReceptionInput") as HTMLSelectElement;
+        let noteInput = document.getElementById("noteInput") as HTMLTextAreaElement;
+
+        attendingWeddingInput.value = `${this._rsvp.attendingWedding}`;
+        attendingReceptionInput.value = `${this._rsvp.attendingReception}`;
+        noteInput.value = this._rsvp.note;        
+    }
+
+    setupEditMode() {
+        this._editMode = true;
+        this.syncRsvpToHtmlInput();
+    }
+
+    isEditMode(): boolean {
+        return this._editMode;
     }
     
     getEventHeading(): string {
@@ -157,7 +193,6 @@ export class RsvpComponent {
     }
 
     /* Page Inputs and Element Functions */
-
     openPopupContainer() {
         let popupContainer = document.getElementById("popupContainer")!;
         popupContainer.style.display = "block";
@@ -200,8 +235,28 @@ export class RsvpComponent {
         ageInput.value = "";
     }
 
-    addGuest() {
+    async addGuest() {
+        let nameInput: HTMLInputElement = document.getElementById("guestNameInput")! as HTMLInputElement;
+        let ageInput: HTMLSelectElement = document.getElementById("guestAgeInput")! as HTMLSelectElement;
 
+        if (!IsNullOrWhitespace(nameInput.value) && !IsNullOrWhitespace(ageInput.value)) {
+            let newGuest: Guest = new Guest();
+            let newGuestId: string = await this._utilityService.GetNewGuidAsync();
+            newGuest.id = newGuestId;
+            newGuest.age = Number.parseInt(ageInput.value);
+            newGuest.name = nameInput.value;
+
+            if (!this._rsvp.guests) {
+                this._rsvp.guests = new Array<Guest>();
+            }
+            this._rsvp.guests.push(newGuest);
+
+            //Functionally closes and resets the Guest wizard
+            this.cancelGuest();
+        }
+        else {
+
+        }
     }
     cancelGuest() {
         this.closePopupContainer();
