@@ -28,18 +28,18 @@
             }
         }
 
-        private string _contactEmail;
-        public string ContactEmail
-        {
-            get
-            {
-                return this._contactEmail;
-            }
-            set
-            {
-                this._contactEmail = value;
-            }
-        }
+        //private string _contactEmail;
+        //public string ContactEmail
+        //{
+        //    get
+        //    {
+        //        return this._contactEmail;
+        //    }
+        //    set
+        //    {
+        //        this._contactEmail = value;
+        //    }
+        //}
 
         private DateTime _expiryDate;
         public DateTime ExpiryDate

@@ -45,10 +45,13 @@
 
         public class KnownStoredProcedures
         {
+            public static string Event_Get_ByEmail = "dbo.up_Event_Get_ByEmail";
             public static string Event_Get_ById = "dbo.up_Event_Get_ById";
             public static string Guest_Get_ByRsvpId = "dbo.up_Guest_Get_ByRsvpId";
             public static string Guest_Upsert = "dbo.up_Guest_Upsert";
+            public static string Invitation_Get_ByEventId = "dbo.up_Invitation_Get_ByEventId";
             public static string Invitation_Get_ById = "dbo.up_Invitation_Get_ById";
+            public static string RSVP_Get_ByEventId = "dbo.up_RSVP_Get_ByEventId";
             public static string RSVP_Get_ById = "dbo.up_RSVP_Get_ById";
             public static string RSVP_Get_ByInvitationID = "dbo.up_RSVP_Get_ByInvitationId";
             public static string RSVP_Submit = "dbo.up_RSVP_Submit";

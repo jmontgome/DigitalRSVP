@@ -1,0 +1,40 @@
+.report-main {
+    text-align: -webkit-center;
+    margin-top: 5vh;
+    font-size: large;
+    overflow-y: auto;
+    max-height: 85vh;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.report-form-label {
+    text-align: left;
+}
+
+.report-emailInput {
+    margin-top: 2vh;
+    width: 260px;
+    height: 25px;
+    font-size: medium;
+    margin-bottom: 5vh;
+}
+
+.report-button-submit {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    font-size: large;
+    background-color: rgb(0, 255, 0);
+    border-color: rgb(0, 151, 0);
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+}
+.report-button-submit:active {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    font-size: large;
+    background-color: rgb(35, 187, 35);
+    border-color: rgb(6, 129, 6);
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+}

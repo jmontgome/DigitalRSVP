@@ -19,7 +19,6 @@ namespace DigitalRSVP.WAPI.Repositories
             Event retEvent = new Event();
             retEvent.Id = Guid.Parse(data["WorkItemId"].ToString()!);
             retEvent.Name = data["Name"].ToString()!;
-            retEvent.ContactEmail = data["ContactEmail"].ToString()!;
             retEvent.ExpiryDate = DateTime.Parse(data["ExpiryDate"].ToString()!);
             return retEvent;
         }
