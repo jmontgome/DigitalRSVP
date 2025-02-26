@@ -17,5 +17,9 @@ namespace DigitalRSVP.WAPI.Services
         {
             return await this._eventRepo.GetEventByIdAsync(id);
         }
+        public async Task<Event> GetEventByEmailAsync(string email)
+        {
+            return await this._eventRepo.GetEventByEmailAsync(email);
+        }
     }
 }

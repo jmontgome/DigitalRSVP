@@ -26,6 +26,15 @@ namespace DigitalRSVP.WAPI.Repositories
             inv.Updated_Date = DateTime.Parse(data["Updated_Date"].ToString()!);
             return inv;
         }
+        private IEnumerable<Invitation> HydrateInvitations(DataTable table)
+        {
+            List<Invitation> invs = new List<Invitation>();
+            foreach (DataRow row in table.Rows)
+            {
+                invs.Add(HydrateInvitation(row));
+            }
+            return invs;
+        }
 
         public async Task<Invitation> GetInvitationAsync(Guid id)
         {
@@ -39,6 +48,22 @@ namespace DigitalRSVP.WAPI.Repositories
                 if (table.Rows.Count > 0)
                 {
                     return HydrateInvitation(table.Rows[0]);
+                }
+            }
+            return null;
+        }
+        public async Task<IEnumerable<Invitation>> GetInvitationByEventIdAsync(Guid eventId)
+        {
+            List<SqlParameter> param = new List<SqlParameter>()
+            {
+                new SqlParameter("@EventId", eventId)
+            };
+            DataTable table = await this.ExecuteQueryAsync(KnownSQL.KnownStoredProcedures.Invitation_Get_ByEventId, KnownSQL.KnownTables.Invitation, param.ToArray());
+            if (table != null)
+            {
+                if (table.Rows.Count > 0)
+                {
+                    return HydrateInvitations(table);
                 }
             }
             return null;

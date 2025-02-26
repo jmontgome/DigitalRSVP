@@ -37,6 +37,7 @@
     {
         public class KnownTables
         {
+            public static string Email = "dbo.Email";
             public static string Event = "dbo.Event";
             public static string Guest = "dbo.Guest";
             public static string Invitation = "dbo.Invitation";

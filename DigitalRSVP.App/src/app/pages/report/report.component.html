@@ -3,11 +3,12 @@
     <p>
         Please enter the email address we have on file to receive your RSVP and Event report.
     </p>
+    <p id="resultMessage"></p>
     <div>
         <input class="report-emailInput" type="text" id="emailInput" />
     </div>
     <div>
-        <button class="report-button-submit" id="reportSubmit">
+        <button class="report-button-submit" id="reportSubmit" (click)="TriggerReportSending()">
             Submit
         </button>
     </div>

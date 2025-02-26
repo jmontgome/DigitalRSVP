@@ -56,6 +56,7 @@ export class ApplicationConstants {
     public static Error_Post: string = "Error";
 
     public static Utilities_GetNewGuid: string = "Utility/NewGuid";
+    public static Utilities_TriggerReportSending: string = "Utility/Report";
 
     public static Invitation_GetInvite: string = "Invitation/id";
 

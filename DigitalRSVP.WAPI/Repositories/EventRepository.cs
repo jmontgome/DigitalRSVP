@@ -39,5 +39,21 @@ namespace DigitalRSVP.WAPI.Repositories
             }
             return null;
         }
+        public async Task<Event> GetEventByEmailAsync(string email)
+        {
+            List<SqlParameter> param = new List<SqlParameter>()
+            {
+                new SqlParameter("@email", email)
+            };
+            DataTable table = await this.ExecuteQueryAsync(KnownSQL.KnownStoredProcedures.Event_Get_ByEmail, KnownSQL.KnownTables.Email, param.ToArray());
+            if (table != null)
+            {
+                if (table.Rows.Count > 0)
+                {
+                    return HydrateEvent(table.Rows[0]);
+                }
+            }
+            return null;
+        }
     }
 }

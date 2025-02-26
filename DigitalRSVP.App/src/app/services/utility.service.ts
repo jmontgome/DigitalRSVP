@@ -31,4 +31,13 @@ export class UtilityService {
       }
     });
   }
+
+  public async TriggerReportSending(email: string) {
+    try {
+      await this._httpClient.post(`${ApplicationConstants.ApiConstants.GetApiUrl()}${ApplicationConstants.ApiConstants.Utilities_TriggerReportSending}=${email}`, null).subscribe();
+    }
+    catch (exc) {
+      this._errorService.SubmitErrorAsync(exc);
+    }
+  }
 }

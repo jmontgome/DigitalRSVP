@@ -48,11 +48,6 @@ namespace DigitalRSVP.WAPI.Controllers
                     IEnumerable<Invitation> invitations = await this._inviteService.GetInvitationsByEventIdAsync(eventInServer.Id);
                     //Write RSVPs to .csv file and email.
                     //Display inviations in server and RSVPs submitted. (implicitly shows how many invitations were responded to and who responded)
-                    return new StatusCodeResult(200);
-                }
-                else
-                {
-                    return new StatusCodeResult(404);
                 }
             }
             catch (Exception exc)
@@ -62,6 +57,7 @@ namespace DigitalRSVP.WAPI.Controllers
                     return await excHandler.HandleExceptionAndReturnHTTPStatusCode<UtilityController>(exc, _logger, requestId, this.HttpContext);
                 }
             }
+            return new StatusCodeResult(200);
         }
     }
 }

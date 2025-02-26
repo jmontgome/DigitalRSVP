@@ -17,6 +17,10 @@ namespace DigitalRSVP.WAPI.Services
         {
             return await _invRepo.GetInvitationAsync(id);
         }
+        public async Task<IEnumerable<Invitation>> GetInvitationsByEventIdAsync(Guid eventId)
+        {
+            return await _invRepo.GetInvitationByEventIdAsync(eventId);
+        }
 
         public async Task<bool> InvitationAuthorizedAsync(Guid inviteeId)
         {

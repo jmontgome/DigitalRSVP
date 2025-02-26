@@ -33,6 +33,18 @@ namespace DigitalRSVP.WAPI.Services
             }
             return ret;
         }
+        public async Task<IEnumerable<RSVP>> GetRSVPsByEventIdAsync(Guid eventId)
+        {
+            IEnumerable<RSVP> ret = await _rsvpRepo.GetRSVPsByEventIdAsync(eventId);
+            if (ret != null)
+            {
+                foreach (RSVP rsvp in ret)
+                {
+                    rsvp.Guests = await _guestRepo.GetGuestsByRSVPIdAsync(rsvp.Id);
+                }
+            }
+            return ret;
+        }
 
         public async Task SubmitRSVPAsync(RSVP rsvp)
         {
