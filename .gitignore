@@ -398,3 +398,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/DigitalRSVP.WAPI/.config
+/DigitalRSVP.WAPI/Properties/ServiceDependencies/digital-rsvp-service-dev - Web Deploy
+/DigitalRSVP.WAPI/Properties/serviceDependencies.json
+/DigitalRSVP.WAPI/Properties/serviceDependencies.digital-rsvp-service-dev - Web Deploy.json

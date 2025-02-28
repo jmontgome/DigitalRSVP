@@ -23,8 +23,8 @@
 #if RELEASE
         public static string[] AllowedDomains_PROD = 
         {
-                
-        }
+            
+        };
 #else
         public static string[] AllowedDomains_PROD =
         {
