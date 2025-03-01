@@ -22,7 +22,7 @@ namespace DigitalRSVP.WAPI.Controllers
         public async Task<IActionResult> SubmitError(object error)
         {
             Guid requestId = Guid.NewGuid();
-            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ {this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
+            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ [POST]{this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
             try
             {
                 if (error != null)

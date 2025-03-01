@@ -79,7 +79,7 @@ namespace DigitalRSVP.WAPI
                     app.UseSwagger();
                     app.UseSwaggerUI(c =>
                     {
-                        c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{ApplicationConstants.APPLICATION_TITLE} [{env.EnvironmentName}]");
+                        c.SwaggerEndpoint($"/swagger/{ApplicationConstants.APPLICATION_VERSION}/swagger.json", $"{ApplicationConstants.APPLICATION_TITLE} {ApplicationConstants.APPLICATION_VERSION} [{env.EnvironmentName}]");
                     });
                 }
             }

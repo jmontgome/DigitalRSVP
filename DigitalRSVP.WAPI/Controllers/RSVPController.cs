@@ -29,7 +29,7 @@ namespace DigitalRSVP.WAPI.Controllers
         public async Task<IActionResult> GetRSVP(string rsvpId)
         {
             Guid requestId = Guid.NewGuid();
-            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ {this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
+            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ [GET]{this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
             try
             {
                 if (Guid.TryParse(rsvpId, out Guid id))
@@ -63,7 +63,7 @@ namespace DigitalRSVP.WAPI.Controllers
         public async Task<IActionResult> GetRSVPByInvitee(string invId)
         {
             Guid requestId = Guid.NewGuid();
-            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ {this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
+            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ [GET]{this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
             try
             {
                 if (Guid.TryParse(invId, out Guid id))
@@ -96,7 +96,7 @@ namespace DigitalRSVP.WAPI.Controllers
         public async Task<IActionResult> SubmitRSVP()
         {
             Guid requestId = Guid.NewGuid();
-            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ {this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
+            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ [POST]{this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
             try
             {
                 string bodyText;
@@ -119,7 +119,7 @@ namespace DigitalRSVP.WAPI.Controllers
                             }
                             else
                             {
-                                throw new InvalidDataException($"User submitted an RSVP that already exists, Invitation ID: {submittedRSVP.InviteeId}.");
+                                throw new InvalidDataException($"User submitted an RSVP that already exists, Invitation ID: {submittedRSVP.InviteeId}. \r\n\t RSVP: {bodyText}");
                             }
                         }
                         else
@@ -144,7 +144,7 @@ namespace DigitalRSVP.WAPI.Controllers
         public async Task<IActionResult> EditRSVP()
         {
             Guid requestId = Guid.NewGuid();
-            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ {this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
+            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ [PUT]{this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
             try
             {
                 string bodyText;

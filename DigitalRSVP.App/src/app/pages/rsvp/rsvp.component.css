@@ -1,9 +1,9 @@
 .rsvp-main {
     text-align: -webkit-center;
-    margin-top: 5vh;
+    margin-top: 2vh;
     font-size: large;
     overflow-y: auto;
-    max-height: 85vh;
+    max-height: 90vh;
     padding-left: 10%;
     padding-right: 10%;
 }
@@ -106,6 +106,26 @@
 }
 .rsvp-button-img {
     width: 50%;
+}
+
+.rsvp-button-submit {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    margin-bottom: 15vh;
+    font-size: large;
+    background-color: rgb(0, 255, 0);
+    border-color: rgb(0, 151, 0);
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+}
+.rsvp-button-submit:active {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    font-size: large;
+    background-color: rgb(35, 187, 35);
+    border-color: rgb(6, 129, 6);
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
 }
 
 .rsvp-note-input {

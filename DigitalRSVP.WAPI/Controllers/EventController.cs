@@ -26,7 +26,7 @@ namespace DigitalRSVP.WAPI.Controllers
         public async Task<IActionResult> GetEventById(string eventId)
         {
             Guid requestId = Guid.NewGuid();
-            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ {this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
+            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ [GET]{this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
             try
             {
                 if (Guid.TryParse(eventId, out Guid id))

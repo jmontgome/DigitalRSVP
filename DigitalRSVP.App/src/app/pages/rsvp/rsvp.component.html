@@ -102,10 +102,10 @@
     </label>
     <textarea class="rsvp-note-input" id="noteInput"></textarea>
 
-    <button class="rsvp-button-add" *ngIf="isEditMode()" (click)="submitRsvp()">
+    <button class="rsvp-button-submit" *ngIf="isEditMode()" (click)="submitRsvp()">
         Save Edit
     </button>
-    <button class="rsvp-button-add" *ngIf="!isEditMode()" (click)="submitRsvp()">
+    <button class="rsvp-button-submit" *ngIf="!isEditMode()" (click)="submitRsvp()">
         Submit
     </button>
 </div>

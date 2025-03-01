@@ -38,7 +38,7 @@ namespace DigitalRSVP.WAPI.Controllers
         public async Task<IActionResult> TriggerReportSending(string email)
         {
             Guid requestId = Guid.NewGuid();
-            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ {this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
+            _logger.LogInformation($"[Request ID: {requestId}] Endpoint called @ [GET]{this.HttpContext.Request.Path} from {this.HttpContext.Connection.RemoteIpAddress}");
             try
             {
                 Event eventInServer = await this._eventService.GetEventByEmailAsync(email);

@@ -14,11 +14,13 @@
 
         public static string[] AllowedDomains_DEV =
         {
-            "http://localhost:63432"
+            "http://localhost:63432",
+            "https://digital-rsvp-dev.azurewebsites.net"
         };
         public static string[] AllowedDomains_TEST =
         {
-            "http://localhost:63432"
+            "http://localhost:63432",
+            "https://digital-rsvp-dev.azurewebsites.net"
         };
 #if RELEASE
         public static string[] AllowedDomains_PROD = 

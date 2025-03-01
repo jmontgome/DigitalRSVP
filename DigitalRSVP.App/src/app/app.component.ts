@@ -1,33 +1,45 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, Inject, InjectionToken, FactoryProvider } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationConstants, EnvironmentType } from './application.constants';
+
+export const WINDOW = new InjectionToken<Window>('window');
+
+const windowProvider: FactoryProvider = {
+  provide: WINDOW,
+  useFactory: () => window
+};
+
+export const WINDOW_PROVIDERS = [
+  windowProvider
+]
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  providers: WINDOW_PROVIDERS
 })
 export class AppComponent implements OnInit {
-  private readonly _route = inject(ActivatedRoute);
-
   private _router: Router;
 
-  constructor(router: Router) {
+  constructor(@Inject(WINDOW) private window: Window, router: Router) {
     this._router = router;
   }
 
   ngOnInit() {
-    if (this._router.url.includes("localhost")) {
+    if (this.window.location.hostname.includes("localhost")) {
       ApplicationConstants.ApiConstants.Environment = EnvironmentType.DEV;
     }
-    else if (this._router.url.includes("digitalrsvp-dev")) {
+    else if (this.window.location.hostname.includes("digital-rsvp-dev")) {
       ApplicationConstants.ApiConstants.Environment = EnvironmentType.TEST;
     }
-    else if (this._router.url.includes("digitalrsvp-staging")) {
+    else if (this.window.location.hostname.includes("digital-rsvp-staging")) {
       ApplicationConstants.ApiConstants.Environment = EnvironmentType.STAGING;
     }
-    else if (this._router.url.includes("digitalrsvp.")) {
+    else if (this.window.location.hostname.includes("digital-rsvp.")) {
       ApplicationConstants.ApiConstants.Environment = EnvironmentType.PRODUCTION;
     }
+    console.log(this.window.location.hostname);
+    console.log(ApplicationConstants.ApiConstants.Environment);
   }
 }
