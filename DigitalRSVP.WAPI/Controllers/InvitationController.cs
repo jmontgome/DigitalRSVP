@@ -37,6 +37,7 @@ namespace DigitalRSVP.WAPI.Controllers
                     }
                     else
                     {
+                        _logger.LogInformation($"[Request ID: {requestId}] No Invitation found for given Invitation ID, {id}.");
                         return new StatusCodeResult(204);
                     }
                 }

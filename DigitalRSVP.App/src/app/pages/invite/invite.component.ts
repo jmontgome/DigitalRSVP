@@ -18,6 +18,8 @@ export class InviteComponent {
   private readonly _inviteService: InvitationService;
   private readonly _errorService: ErrorService;
 
+  private _screenReady: boolean = false;
+
   constructor(router: Router,
     inviteService: InvitationService,
     errorService: ErrorService) {
@@ -28,6 +30,11 @@ export class InviteComponent {
   }
 
   async ngOnInit() {
+    setTimeout(() => {
+      if (this._screenReady != true) {
+        this._router.navigateByUrl('/not-found');
+      }
+    }, 30000);
     if (sessionStorage.getItem(ApplicationConstants.AppConstants.HASOPENED_FLAG_STORAGE)) {
       this._router.navigateByUrl('/rsvp');
     }
@@ -39,6 +46,7 @@ export class InviteComponent {
           let invite: Invitation = await this._inviteService.GetInvitationAsync(invId);
           if (invite) {
             localStorage.setItem(ApplicationConstants.AppConstants.INVITE_OBJ_STORAGE, JSON.stringify(invite));
+            this._screenReady = true;
           }
           else {
             this._router.navigateByUrl('not-found');
@@ -54,8 +62,14 @@ export class InviteComponent {
     }
   }
 
+  screenReady() {
+    return this._screenReady;
+  }
+
   openInvitation() {
     sessionStorage.setItem('hasOpenedInv', 'true');
-    this._router.navigateByUrl('/rsvp');
+    if (this._screenReady) {
+      this._router.navigateByUrl('/rsvp');
+    }
   }
 }

@@ -31,6 +31,7 @@ export class RsvpComponent {
     private readonly _eventService: EventService;
     private readonly _errorService: ErrorService;
 
+    private _screenReady: boolean = false;
     private _editMode: boolean = false;
 
     private _invitation: Invitation | null = null;
@@ -58,6 +59,11 @@ export class RsvpComponent {
     //Some of this is a little hard to read on a tired mind...
     //Maybe look at again later...
     async ngOnInit() {
+        setTimeout(() => {
+            if (this._screenReady != true) {
+              this._router.navigateByUrl('/not-found');
+            }
+          }, 60000);
         if (!sessionStorage.getItem(ApplicationConstants.AppConstants.HASOPENED_FLAG_STORAGE)) {
             this._router.navigateByUrl('not-found');
         }
@@ -89,6 +95,8 @@ export class RsvpComponent {
             
             this._event = JSON.parse(event!);
             this._invitation = JSON.parse(invite!);
+
+            this._screenReady = true;
 
             if (this._event && this._invitation) {
                 let rsvpInServer = await this._rsvpService.GetRsvpByInvitee(this._invitation!.id);
@@ -139,6 +147,10 @@ export class RsvpComponent {
     setupEditMode() {
         this._editMode = true;
         this.syncRsvpToHtmlInput();
+    }
+
+    screenReady() {
+        return this._screenReady;
     }
 
     isEditMode(): boolean {

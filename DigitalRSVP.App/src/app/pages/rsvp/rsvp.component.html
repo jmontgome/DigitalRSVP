@@ -1,4 +1,4 @@
-<div class="rsvp-popup-container" id="popupContainer">
+<div class="rsvp-popup-container" id="popupContainer" *ngIf="screenReady()">
     <div class="rsvp-popup-window" id="welcomeWindow">
         <p>You've Been Invited To</p>
         <h2>{{this.getEventHeading()}}</h2>
@@ -72,7 +72,7 @@
     </div>
 </div>
 
-<div class="rsvp-main">
+<div class="rsvp-main" *ngIf="screenReady()">
     <h2>RSVP</h2>
     <h3>{{this.getInvitationHeading()}}</h3>
     <p>Please fill out the following information, so we may get your RSVP!</p>
@@ -108,4 +108,7 @@
     <button class="rsvp-button-submit" *ngIf="!isEditMode()" (click)="submitRsvp()">
         Submit
     </button>
+</div>
+<div class="loading-container" *ngIf="!screenReady()">
+    <h2>Loading...</h2>
 </div>

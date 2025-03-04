@@ -39,7 +39,5 @@ export class AppComponent implements OnInit {
     else if (this.window.location.hostname.includes("digital-rsvp.")) {
       ApplicationConstants.ApiConstants.Environment = EnvironmentType.PRODUCTION;
     }
-    console.log(this.window.location.hostname);
-    console.log(ApplicationConstants.ApiConstants.Environment);
   }
 }

@@ -9,3 +9,8 @@
     width: 90%;
     max-width: 640px;
 }
+
+.loading-container {
+    margin-top: 30vh;
+    text-align: center;
+}

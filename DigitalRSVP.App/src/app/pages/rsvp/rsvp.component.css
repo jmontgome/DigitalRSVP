@@ -1,3 +1,8 @@
+.loading-container {
+    margin-top: 30vh;
+    text-align: center;
+}
+
 .rsvp-main {
     text-align: -webkit-center;
     margin-top: 2vh;
@@ -45,7 +50,7 @@
     text-align: left;
 }
 .rsvp-form-input {
-
+    
 }
 
 .rsvp-table-guests {
