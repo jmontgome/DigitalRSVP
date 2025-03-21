@@ -1,6 +1,7 @@
 ﻿using DigitalRSVP.Core.Models;
 using DigitalRSVP.Core.Services;
 using DigitalRSVP.WAPI.Handlers.Exceptions;
+using DigitalRSVP.WAPI.Reporting;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 
@@ -46,8 +47,14 @@ namespace DigitalRSVP.WAPI.Controllers
                 {
                     IEnumerable<RSVP> rsvps = await this._rsvpService.GetRSVPsByEventIdAsync(eventInServer.Id);
                     IEnumerable<Invitation> invitations = await this._inviteService.GetInvitationsByEventIdAsync(eventInServer.Id);
-                    //Write RSVPs to .csv file and email.
-                    //Display inviations in server and RSVPs submitted. (implicitly shows how many invitations were responded to and who responded)
+                    using (RSVPReportFactory<UtilityController> reportFactory = new RSVPReportFactory<UtilityController>(this._logger, rsvps, invitations))
+                    {
+                        //Either do a CSV file attachment in email or send a report in the body of an email.
+                        //using (MemoryStream memoryStream = reportFactory.GenerateCSVFile())
+                        //{
+                        //    //Write the reporting data down
+                        //}
+                    }
                 }
             }
             catch (Exception exc)
