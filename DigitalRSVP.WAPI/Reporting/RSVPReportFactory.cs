@@ -17,6 +17,7 @@ namespace DigitalRSVP.WAPI.Reporting
 
         public override string GenerateEmailReportBody()
         {
+            return "Test";
             if (this._rsvps != null && this._invitations != null)
             {
                 if (this._rsvps.Count() > 0 && this._invitations.Count() > 0)

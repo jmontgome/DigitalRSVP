@@ -2,6 +2,7 @@
 using DigitalRSVP.Core.Services;
 using DigitalRSVP.WAPI.Handlers.Exceptions;
 using DigitalRSVP.WAPI.Reporting;
+using DigitalRSVP.WAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 
@@ -12,15 +13,18 @@ namespace DigitalRSVP.WAPI.Controllers
     public class UtilityController : Controller
     {
         private readonly ILogger<UtilityController> _logger;
+        private readonly IEmailService _emailService;
         private readonly IRSVPService _rsvpService;
         private readonly IEventService _eventService;
         private readonly IInvitationService _inviteService;
 
         public UtilityController(ILogger<UtilityController> logger,
             IRSVPService rsvpService, IEventService eventService,
-            IInvitationService inviteService)
+            IInvitationService inviteService,
+            IEmailService emailService)
         {
             _logger = logger;
+            _emailService = emailService;
             _rsvpService = rsvpService;
             _eventService = eventService;
             _inviteService = inviteService;
@@ -49,11 +53,8 @@ namespace DigitalRSVP.WAPI.Controllers
                     IEnumerable<Invitation> invitations = await this._inviteService.GetInvitationsByEventIdAsync(eventInServer.Id);
                     using (RSVPReportFactory<UtilityController> reportFactory = new RSVPReportFactory<UtilityController>(this._logger, rsvps, invitations))
                     {
-                        //Either do a CSV file attachment in email or send a report in the body of an email.
-                        //using (MemoryStream memoryStream = reportFactory.GenerateCSVFile())
-                        //{
-                        //    //Write the reporting data down
-                        //}
+                        string emailBody = reportFactory.GenerateEmailReportBody();
+                        this._emailService.SendEmail($"RSVP Report for {eventInServer.Name}", emailBody, email);
                     }
                 }
             }

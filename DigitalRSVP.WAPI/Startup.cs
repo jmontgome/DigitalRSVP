@@ -3,6 +3,7 @@ using DigitalRSVP.Core.Services;
 using DigitalRSVP.WAPI.Repositories;
 using DigitalRSVP.WAPI.Repositories.Interfaces;
 using DigitalRSVP.WAPI.Services;
+using DigitalRSVP.WAPI.Services.Interfaces;
 using Microsoft.OpenApi.Models;
 
 namespace DigitalRSVP.WAPI
@@ -14,12 +15,11 @@ namespace DigitalRSVP.WAPI
         public IConfiguration Configuration { get; }
 
         public ConnectionOptions ConnectionOptions { get; private set; } = new ConnectionOptions();
-        public ApplicationEnvironmentVariables? AppEnvVariables { get; private set; }
+        public ApplicationEnvironmentVariables AppEnvVariables { get; private set; }
 
         public static class ConfigurationKeys
         {
             public const string ConnectionStringsKey = "ConnectionStrings";
-            public const string AppVarKey = "ApplicationVariables";
         }
 
         public Startup(IConfiguration configuration, ILogger<Startup> logger)
@@ -36,7 +36,7 @@ namespace DigitalRSVP.WAPI
 
             try
             {
-                AppEnvVariables = new ApplicationEnvironmentVariables(Environment.GetEnvironmentVariables());
+                AppEnvVariables = new ApplicationEnvironmentVariables(configuration);
             }
             catch (Exception exc)
             {
@@ -135,8 +135,10 @@ namespace DigitalRSVP.WAPI
 
             Logger.LogInformation($"Adding Configuration Options for Services to consume.");
             services.AddSingleton<ConnectionOptions>(this.ConnectionOptions);
+            services.AddSingleton<ApplicationEnvironmentVariables>(this.AppEnvVariables);
 
             Logger.LogInformation($"Adding Services");
+            services.AddSingleton<IEmailService, EmailService>();
             services.AddSingleton<IEventService, EventService>();
             services.AddSingleton<IInvitationService, InvitationService>();
             services.AddSingleton<IRSVPService, RSVPService>();
