@@ -4,6 +4,7 @@ using DigitalRSVP.WAPI.Handlers.Exceptions;
 using DigitalRSVP.WAPI.Reporting;
 using DigitalRSVP.WAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mail;
 using System.Net.Mime;
 
 namespace DigitalRSVP.WAPI.Controllers
@@ -54,7 +55,18 @@ namespace DigitalRSVP.WAPI.Controllers
                     using (RSVPReportFactory<UtilityController> reportFactory = new RSVPReportFactory<UtilityController>(this._logger, rsvps, invitations))
                     {
                         string emailBody = reportFactory.GenerateEmailReportBody();
-                        this._emailService.SendEmail($"RSVP Report for {eventInServer.Name}", emailBody, email);
+                        try
+                        {
+                            using (MemoryStream csvBuffer = reportFactory.GenerateCSVFile())
+                            {
+                                this._emailService.SendEmail($"RSVP Report for {eventInServer.Name}", emailBody, email, new List<Attachment> { new Attachment(csvBuffer, $"Report_{eventInServer.Id}.csv") });
+                            }
+                        }
+                        catch (Exception exc)
+                        {
+                            this._emailService.SendEmail($"RSVP Report for {eventInServer.Name}", emailBody, email, null);
+                            _logger.LogError($"[Request ID: {requestId}] Message was sent but an exception occured preventing the report file from being created. {exc}. \r\n\tClient: {this.HttpContext.Request.Path} called by {this.HttpContext.Connection.RemoteIpAddress}.");
+                        }
                     }
                 }
             }

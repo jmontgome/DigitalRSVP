@@ -26,21 +26,24 @@ namespace DigitalRSVP.WAPI.Services
             }
         }
 
-        public void SendEmail(string subject, string body, string recipientAddress)
+        public void SendEmail(string subject, string body, string recipientAddress, IEnumerable<Attachment> attachments)
         {
             using (SmtpClient smtpClient = new SmtpClient(this._credentials.Host, int.Parse(this._credentials.Port)))
             {
-                MailAddress from = new MailAddress(this._credentials.Username);
-                MailAddress to = new MailAddress(recipientAddress);
-
                 smtpClient.EnableSsl = true;
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtpClient.UseDefaultCredentials = false;
                 smtpClient.Credentials = new NetworkCredential(this._credentials.Username, this._credentials.Password);
 
-                MailMessage message = new MailMessage(from, to);
-                message.Subject = subject;
-                message.Body = body;
+                MailMessage message = new MailMessage(this._credentials.Username, recipientAddress, subject, body);
+
+                if (attachments != null)
+                {
+                    foreach (Attachment attachment in attachments)
+                    {
+                        message.Attachments.Add(attachment);
+                    }
+                }
 
                 smtpClient.Send(message);
             }

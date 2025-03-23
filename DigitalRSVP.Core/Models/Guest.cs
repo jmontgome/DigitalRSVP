@@ -86,5 +86,16 @@
                 this._attendingReception = value;
             }
         }
+
+		public string AgeAsString()
+		{
+			switch (Age)
+			{
+				case Age.INFANT: return "Infant";
+				case Age.MINOR: return "Minor";
+				case Age.ADULT: return "Adult";
+				default: return "Unlisted";
+			}
+		}
     }
 }
