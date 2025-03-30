@@ -21,8 +21,8 @@ namespace DigitalRSVP.WAPI.Reporting
             {
                 if (this._rsvps.Count() > 0 && this._invitations.Count() > 0)
                 {
-                    return $"Hello!\r\n\tA report on RSVP's and Invitations for an event that your contact information is attached to was requested. Please check the file attached to this email" +
-                        $"to view your RSVP's to your invitations that was sent out.\r\nThank you!\r\n\t-The eRSVP Team";
+                    return $"Hello!\r\n\tA report on RSVPs for an event that your contact information is attached to was requested. Please check the file attached to this email" +
+                        $"to view your invitations' RSVPs.\r\nThank you!\r\n\t-The eRSVP Team";
                 }
                 else
                 {
