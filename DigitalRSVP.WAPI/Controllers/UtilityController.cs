@@ -4,6 +4,7 @@ using DigitalRSVP.WAPI.Handlers.Exceptions;
 using DigitalRSVP.WAPI.Reporting;
 using DigitalRSVP.WAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Net.Mail;
 using System.Net.Mime;
 
@@ -41,6 +42,7 @@ namespace DigitalRSVP.WAPI.Controllers
         }
 
         [HttpPost("Report={email}")]
+        [EnableRateLimiting(ApplicationConstants.STRICT_RATE_LIMITER_POLICY_NAME)]
         public async Task<IActionResult> TriggerReportSending(string email)
         {
             Guid requestId = Guid.NewGuid();

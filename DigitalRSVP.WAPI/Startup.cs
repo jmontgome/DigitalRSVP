@@ -1,5 +1,6 @@
 ﻿using DigitalRSVP.Core.Options;
 using DigitalRSVP.Core.Services;
+using DigitalRSVP.WAPI.Extensions;
 using DigitalRSVP.WAPI.Repositories;
 using DigitalRSVP.WAPI.Repositories.Interfaces;
 using DigitalRSVP.WAPI.Services;
@@ -71,8 +72,7 @@ namespace DigitalRSVP.WAPI
             app.UseAuthentication();
             app.UseAuthorization();
 
-#if RELEASE
-            if (AppEnvVariables != null) 
+            if (AppEnvVariables != null)
             {
                 if (AppEnvVariables.ShowSwagger)
                 {
@@ -83,13 +83,8 @@ namespace DigitalRSVP.WAPI
                     });
                 }
             }
-#elif DEBUG
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint($"/swagger/{ApplicationConstants.APPLICATION_VERSION}/swagger.json", $"{ApplicationConstants.APPLICATION_TITLE} {ApplicationConstants.APPLICATION_VERSION} [{env.EnvironmentName}]");
-            });
-#endif
+
+            app.UseRateLimiter();
 
             app.UseEndpoints(endpoints =>
             {
@@ -125,6 +120,9 @@ namespace DigitalRSVP.WAPI
                     .AllowCredentials();
                 });
             });
+
+            services.AddGlobalRateLimiter();
+            services.AddStrictRateLimiter(ApplicationConstants.STRICT_RATE_LIMITER_POLICY_NAME);
 
             services.AddLogging(builder =>
             {

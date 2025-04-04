@@ -12,6 +12,8 @@
         public const string CORS_DEV = "DR_CORS_DEV";
         public const string CORS_PROD = "DR_CORS_PROD";
 
+        public const string STRICT_RATE_LIMITER_POLICY_NAME = "STRICT";
+
         public static string[] AllowedDomains_DEV =
         {
             "http://localhost:63432",

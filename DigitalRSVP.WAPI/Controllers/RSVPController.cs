@@ -2,6 +2,7 @@
 using DigitalRSVP.Core.Services;
 using DigitalRSVP.WAPI.Handlers.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Newtonsoft.Json;
 using System.Net.Mime;
 
@@ -93,6 +94,7 @@ namespace DigitalRSVP.WAPI.Controllers
         }
 
         [HttpPost]
+        [EnableRateLimiting(ApplicationConstants.STRICT_RATE_LIMITER_POLICY_NAME)]
         public async Task<IActionResult> SubmitRSVP()
         {
             Guid requestId = Guid.NewGuid();
